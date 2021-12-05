@@ -1,0 +1,32 @@
+.featured{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.featuredItem{
+    flex:1;
+    margin:0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    -webkit-box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32); 
+    box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32);
+}
+.featuredIconContainer{
+    float: left;
+    font-size: 50px !important;
+}
+.message{
+    float: right;
+}
+.featuredTitle{
+    font-size: 30px;
+}
+.featuredMessage{
+    font-size: 20px;
+}

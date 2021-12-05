@@ -1,0 +1,84 @@
+.sidebar{
+    flex:1;
+    height: calc(100vh - 50px);
+    background-color: #2C3E4E;
+    position: sticky;
+}
+
+.sidebarWrapper{
+    padding: 20px;
+    color: #2C3E4E;
+}
+
+.sidebarMenu{
+    margin-bottom: 10px;
+}
+.sidebarTitle{
+    font-size: 25px;
+    color: rgb(193, 193, 194);
+}
+
+.sidebarList{
+    list-style: none;
+    padding: 5px;
+    color: rgb(222, 221, 223);
+
+}
+.sidebarListItem{
+    padding: 5px;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+.sidebarListItem.active,
+.sidebarListItem:hover{
+    background-color:#2C3949;
+}
+.sidebarIcon{
+    margin-right: 5px;
+    font-size: 20px !important;
+}
+.userInfo{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    flex:1;
+    margin:0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+.userIcon{
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 50%;
+    float: left;
+}
+
+
+.sideBarTitle{
+    font-size: 20px;
+    color: rgb(222, 221, 223);
+
+}
+.sideBarMessage{
+    font-size: 15px;
+    color: rgb(222, 221, 223);
+
+}
+.bolaStatusUsuario{
+    background-color: #5D8C7B;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+    margin-top: 3px;
+}
+.sideBarMessageContainer{
+    display: flex;
+}
