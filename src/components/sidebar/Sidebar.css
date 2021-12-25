@@ -25,13 +25,23 @@
 
 }
 .sidebarListItem{
-    padding: 5px;
+    padding: 10px;
     cursor: pointer;
     align-items: center;
     display: flex;
     border-radius: 10px;
     font-size: 18px;
 }
+a:visited {
+    color: rgb(222, 221, 223);
+    text-decoration-line: none;
+}
+a:link {color: rgb(222, 221, 223);
+    text-decoration-line: none;
+
+}  
+a:hover {color: rgb(222, 221, 223)}  
+a:active {color: rgb(222, 221, 223)}  
 
 .sidebarListItem.active,
 .sidebarListItem:hover{
