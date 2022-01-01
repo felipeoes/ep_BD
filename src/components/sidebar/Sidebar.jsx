@@ -1,9 +1,9 @@
 import "./Sidebar.css";
-import {Dashboard,Person,Medication,MedicalServices,Loyalty,LocalShipping,LocalGroceryStore} from '@mui/icons-material/';
-import userIcon from '../../images/userIcon.png'; 
+import { Dashboard, Person, PersonAddAlt1, Medication, MedicalServices, Loyalty, LocalShipping, LocalGroceryStore } from '@mui/icons-material/';
+import userIcon from '../../images/userIcon.png';
 import {
     Link,
-  } from "react-router-dom";
+} from "react-router-dom";
 export default function Sidebar() {
     return (
         <div className="sidebar">
@@ -13,52 +13,62 @@ export default function Sidebar() {
                     <ul className="sidebarList">
                         <Link to="/">
                             <li className="sidebarListItem">
-                                <Dashboard className="sidebarIcon"/> Dashboard
+                                <Dashboard className="sidebarIcon" /> Dashboard
                             </li>
                         </Link>
-                        <Link to="/servicos">
+                        <Link to="/servicos-vendas">
                             <li className="sidebarListItem">
-                                <MedicalServices className="sidebarIcon"/> Serviços
+                                <MedicalServices className="sidebarIcon" /> Serviços
                             </li>
                         </Link>
                         <Link to="/vender">
                             <li className="sidebarListItem">
-                                <LocalGroceryStore className="sidebarIcon"/> Vender
+                                <LocalGroceryStore className="sidebarIcon" /> Vender
                             </li>
                         </Link>
                     </ul>
                     <h3 className="sidebarTitle">Gerenciar</h3>
                     <ul className="sidebarList">
+                        <Link to="/clientes">
+                            <li className="sidebarListItem">
+                                <PersonAddAlt1 className="sidebarIcon" /> Clientes
+                            </li>
+                        </Link>
                         <Link to="/funcionarios">
                             <li className="sidebarListItem">
-                                <Person className="sidebarIcon"/> Funcionários
+                                <Person className="sidebarIcon" /> Funcionários
                             </li>
                         </Link>
                         <Link to="/produtos">
                             <li className="sidebarListItem">
-                                <Medication className="sidebarIcon"/> Produtos
+                                <Medication className="sidebarIcon" /> Produtos
+                            </li>
+                        </Link>
+                        <Link to="/servicos">
+                            <li className="sidebarListItem">
+                                <MedicalServices className="sidebarIcon" /> Serviços
                             </li>
                         </Link>
                         <Link to="/fidelidade">
                             <li className="sidebarListItem">
-                                <Loyalty className="sidebarIcon"/> Programa de fidelidade
+                                <Loyalty className="sidebarIcon" /> Programa de fidelidade
                             </li>
                         </Link>
                         <Link to="/fornecedores">
                             <li className="sidebarListItem">
-                                <LocalShipping className="sidebarIcon"/> Fornecedores
+                                <LocalShipping className="sidebarIcon" /> Fornecedores
                             </li>
                         </Link>
                         <Link to="/solicitarProduto">
                             <li className="sidebarListItem">
-                                <Medication className="sidebarIcon"/> Solicitar Produtos ao Fornecedor
+                                <Medication className="sidebarIcon" /> Solicitar Produtos ao Fornecedor
                             </li>
                         </Link>
                     </ul>
                 </div>
 
                 <div className="userInfo">
-                    <img alt="user icone" className="userIcon" src={userIcon}/>
+                    <img alt="user icone" className="userIcon" src={userIcon} />
                     <div className="message">
                         <span className="sideBarTitle">Nome Usuário</span>
                         <div className="sideBarMessageContainer">

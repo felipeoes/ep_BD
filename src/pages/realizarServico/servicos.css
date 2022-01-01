@@ -1,7 +1,6 @@
-.funcionarios{
+.servicos{
     flex:6;
     margin-top: 16px;
     background-color: #F0F0F0;
-    overflow: auto;
 }
 html, body {margin: 0; height: 100%; overflow: hidden}
