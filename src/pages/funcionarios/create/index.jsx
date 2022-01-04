@@ -6,6 +6,8 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/pt-BR';
 
+import api from '../../../services/api';
+
 import { Container, GenderContainer, GenderContainerType } from "./styles";
 
 function CreateFuncionario() {
@@ -32,7 +34,22 @@ function CreateFuncionario() {
     }
     console.log(obg);
 
-    console.log('cliquei');
+    try {
+      console.log('cliquei');
+
+      var base64encodedData = Buffer.from('felipe' + ':' + '123farma').toString('base64');
+
+      const response = await api.get('/funcionarios', {
+        headers: {
+          'Authorization': 'Basic ' + base64encodedData
+        },
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+
   }, [address, birthDate, name, salary, gender, employeeType, otherEmployeeType]);
 
   return (
@@ -68,11 +85,11 @@ function CreateFuncionario() {
         <GenderContainer>
           <GenderContainerType>
             <label htmlFor="sexo_masc">Masculino</label>
-            <input id="sexo_masc" type="radio" name="sexo" value="masculino" onChange={(event) => setGender(event.target.value)} />
+            <input id="sexo_masc" type="radio" name="sexo" value="m" onChange={(event) => setGender(event.target.value)} />
           </GenderContainerType>
           <GenderContainerType>
             <label htmlFor="sexo_fem">Feminino</label>
-            <input type="radio" id="sexo_fem" name="sexo" value="feminino" onChange={(event) => setGender(event.target.value)} />
+            <input type="radio" id="sexo_fem" name="sexo" value="f" onChange={(event) => setGender(event.target.value)} />
           </GenderContainerType>
         </GenderContainer>
 
