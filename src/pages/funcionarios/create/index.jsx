@@ -41,7 +41,10 @@ function CreateFuncionario() {
 
       const response = await api.get('/funcionarios', {
         headers: {
-          'Authorization': 'Basic ' + base64encodedData
+          'Authorization': 'Basic ' + base64encodedData,
+          "Access-Control-Allow-Credentials": "true",
+          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+          "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
         },
       });
 
