@@ -45,8 +45,9 @@ function CreateFuncionario() {
         },
       });
 
-      console.log(response);
+      console.log(response.data);
     } catch (error) {
+      console.log('erro');
       console.log(error);
     }
 
