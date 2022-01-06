@@ -2,19 +2,52 @@
 import React, { useCallback, useState } from "react";
 import "../clientes.css";
 
+import { toast } from 'react-toastify';
+import api from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
+
 import { Container, CPFContainer } from "./styles";
 
 function PesquisarCliente() {
 
+  const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  // const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [pesquisaCpf, setPesquisaCpf] = useState(false);
+  const [email, setEmail] = useState("");
 
-  const handlePesquisaCPF = useCallback((event) => {
+  const handlePesquisaCPF = useCallback(async (event) => {
     event.preventDefault();
-    const obg = {
-      cpf,
+    try {
+      console.log(birthDate);
+      const obg = {
+        cpf,
+      }
+      console.log(obg);
+
+      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+      const response = await api.get(`clientes/${cpf}`);
+
+      console.log(response);
+      const cliente = response.data;
+
+      setName(cliente.nome);
+      setBirthDate(new Date(cliente.data_nascimento));
+      setGender(cliente.sexo);
+      setEmail(cliente.email);
+
+      setPesquisaCpf(true);
+
+    } catch (error) {
+      toast.error("CPF não encontrado!");
+      console.log('erro');
+      console.log(error);
+      setPesquisaCpf(false);
     }
-    console.log(obg);
-  }, [cpf]);
+  }, [cpf, birthDate]);
 
   return (
     <div className="clientes">
@@ -27,45 +60,36 @@ function PesquisarCliente() {
             placeholder="Digite o número do CPF"
             value={cpf}
             onChange={(event) => setCpf(event.target.value)}
+            required
           />
           <button type="submit">Pesquisar</button>
         </div>
       </CPFContainer>
-
-      <Container>
-        <div>
-          <p>Nome: </p>
-          <p>Nome Cliente</p>
-        </div>
-        <div>
-          <p>CPF: </p>
-          <p>CPF Cliente</p>
-        </div>
-        <div>
-          <p>Programa Fidalidade: </p>
-          <p>Programa Fidelidade</p>
-        </div>
-        <div>
-          <p>Endereço: </p>
-          <p>Endereço Cliente</p>
-        </div>
-        <div>
-          <p>Telefone: </p>
-          <p>Tel Cliente</p>
-        </div>
-        <div>
-          <p>Celular: </p>
-          <p>Cel Cliente</p>
-        </div>
-        <div>
-          <p>E-mail: </p>
-          <p>Email Cliente</p>
-        </div>
-        <div>
-          <p>Sexo: </p>
-          <p>Sexo Cliente</p>
-        </div>
-      </Container>
+      {
+        pesquisaCpf && (
+          <Container>
+            <div>
+              <p>Nome: </p>
+              <p>{name}</p>
+            </div>
+            <div>
+              <p>CPF: </p>
+              <p>{cpf}</p>
+            </div>
+            <div>
+              <p>Telefone: </p>
+              <p>Tel Cliente</p>
+            </div>
+            <div>
+              <p>E-mail: </p>
+              <p>{email}</p>
+            </div>
+            <div>
+              <p>Sexo: </p>
+              <p>{gender === 'F' ? 'Feminino' : 'Masculino'}</p>
+            </div>
+          </Container>
+        )}
     </div>
   );
 }

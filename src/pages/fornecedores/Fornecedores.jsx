@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AddCircle, Edit, Search } from '@mui/icons-material/';
+import { AddCircle, Edit, Ballot } from '@mui/icons-material/';
 
 import "./fornecedores.css";
 
@@ -21,8 +21,8 @@ export default function Fornecedores() {
             <Link to='/update-forn'><CardTitle>Atualizar Fornecedores</CardTitle></Link>
           </Card>
           <Card>
-            <Search color="primary" />
-            <Link to='/srch-forn'><CardTitle>Pesquisar Fornecedor</CardTitle></Link>
+            <Ballot color="primary" />
+            <Link to='/srch-forn'><CardTitle>Listar Fornecedores</CardTitle></Link>
           </Card>
         </CardContainer>
       </Container>

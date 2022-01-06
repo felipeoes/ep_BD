@@ -77,6 +77,7 @@ export const GenderContainerType = styled.div`
 export const CNPJContainer = styled.form`
     margin: auto;
     width: 60%;
+    text-align: center;
 
     h2{
         /* color: var(--text-title); */

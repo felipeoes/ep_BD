@@ -23,10 +23,6 @@ export default function Servicos() {
                         <Ballot color="primary" />
                         <Link to='/list-serv'><CardTitle>Listar Serviços</CardTitle></Link>
                     </Card>
-                    <Card>
-                        <MedicalServices color="primary" />
-                        <Link to='/realizar-servico'><CardTitle>Realizar Serviço</CardTitle></Link>
-                    </Card>
                 </CardContainer>
             </Container>
         </div>

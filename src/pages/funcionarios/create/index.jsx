@@ -2,59 +2,60 @@
 import React, { useCallback, useState } from "react";
 import "../funcionarios.css";
 
-import DatePicker, { registerLocale } from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-import es from 'date-fns/locale/pt-BR';
-
+import { toast } from 'react-toastify';
 import api from '../../../services/api';
 
 import { Container, GenderContainer, GenderContainerType } from "./styles";
 
 function CreateFuncionario() {
   const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [address, setAddress] = useState("");
+  const [funcional, setFuncional] = useState("");
   const [salary, setSalary] = useState("");
   const [gender, setGender] = useState("");
-  const [employeeType, setEmployeeType] = useState("");
+  const [employeeType, setEmployeeType] = useState("farmaceutico");
   const [otherEmployeeType, setOtherEmployeeType] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  registerLocale('es', es);
+  const [crf, setCrf] = useState('');
 
   const handleCreateNewEmployee = useCallback(async (event) => {
     event.preventDefault();
-    const obg = {
-      name,
-      birthDate,
-      address,
-      salary,
-      gender,
-      employeeType: employeeType === 'outros' && otherEmployeeType
+
+    let obg;
+    if (employeeType === 'farmaceutico') {
+      obg = {
+        funcional: funcional,
+        nome: name,
+        salario: Number(salary),
+        sexo: gender,
+        tipo_func: 'farmaceutico',
+        crf,
+      }
+    } else {
+      obg = {
+        funcional: funcional,
+        nome: name,
+        salario: Number(salary),
+        sexo: gender,
+        tipo_func: employeeType === 'outros' ? otherEmployeeType : employeeType,
+      }
     }
+
     console.log(obg);
 
     try {
-      console.log('cliquei');
 
-      var base64encodedData = Buffer.from('felipe' + ':' + '123farma').toString('base64');
+      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+      const response = await api.post('funcionarios/', obg);
 
-      const response = await api.get('/funcionarios', {
-        headers: {
-          'Authorization': 'Basic ' + base64encodedData,
-          "Access-Control-Allow-Credentials": "true",
-          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-          "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-        },
-      });
+      console.log(response);
+      toast.success("Cliente cadastrado com sucesso");
 
-      console.log(response.data);
     } catch (error) {
       console.log('erro');
       console.log(error);
     }
 
-  }, [address, birthDate, name, salary, gender, employeeType, otherEmployeeType]);
+  }, [funcional, name, crf, salary, gender, employeeType, otherEmployeeType]);
 
   return (
     <div className="funcionarios">
@@ -66,34 +67,34 @@ function CreateFuncionario() {
           placeholder="Nome"
           value={name}
           onChange={(event) => setName(event.target.value)}
+          required
         />
         <input
           type="text"
-          placeholder="Endereço"
-          value={address}
-          onChange={(event) => setAddress(event.target.value)}
+          placeholder="Funcional"
+          value={funcional}
+          onChange={(event) => setFuncional(event.target.value)}
+          required
+          pattern="[0-9]{7}"
         />
         <input
           type="text"
           placeholder="Telefone"
           value={phoneNumber}
           onChange={(event) => setPhoneNumber(event.target.value)}
+          required
+          pattern="[0-9]{7}"
         />
-        <input
-          type="text"
-          placeholder="Celular"
-          value={mobileNumber}
-          onChange={(event) => setMobileNumber(event.target.value)}
-        />
-        <DatePicker locale='es' selected={birthDate} onChange={(date) => setBirthDate(date)} dateFormat="dd/MM/yyyy" placeholderText="Data de Nascimento" />
         <GenderContainer>
           <GenderContainerType>
-            <label htmlFor="sexo_masc">Masculino</label>
-            <input id="sexo_masc" type="radio" name="sexo" value="m" onChange={(event) => setGender(event.target.value)} />
+            <label htmlFor="sexo_masc">Masculino
+              <input id="sexo_masc" required type="radio" name="sexo" value="M" onChange={(event) => setGender(event.target.value)} />
+            </label>
           </GenderContainerType>
           <GenderContainerType>
-            <label htmlFor="sexo_fem">Feminino</label>
-            <input type="radio" id="sexo_fem" name="sexo" value="f" onChange={(event) => setGender(event.target.value)} />
+            <label htmlFor="sexo_fem">Feminino
+              <input type="radio" id="sexo_fem" name="sexo" value="F" onChange={(event) => setGender(event.target.value)} />
+            </label>
           </GenderContainerType>
         </GenderContainer>
 
@@ -113,11 +114,22 @@ function CreateFuncionario() {
             onChange={(event) => setOtherEmployeeType(event.target.value)}
           />
         }
+        {employeeType === 'farmaceutico' &&
+          <input
+            type="text"
+            placeholder="crf"
+            value={crf}
+            onChange={(event) => setCrf(event.target.value)}
+            required={employeeType === 'farmaceutico'}
+            pattern="[0-9]{6}"
+          />
+        }
         <input
           type="number"
           placeholder="Salário"
           value={salary}
           onChange={(event) => setSalary(event.target.value)}
+          required
         />
 
         <button type="submit">Cadastrar</button>

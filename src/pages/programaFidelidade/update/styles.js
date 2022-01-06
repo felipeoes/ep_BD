@@ -77,7 +77,7 @@ export const GenderContainerType = styled.div`
 export const ProgramaFidContainer = styled.form`
     margin: auto;
     width: 60%;
-
+    text-align: center;
     h2{
         /* color: var(--text-title); */
         font-size: 1.5rem;

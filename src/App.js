@@ -2,6 +2,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
@@ -21,6 +24,7 @@ import CreateFornecedor from "./pages/fornecedores/create";
 import UpdateFornecedor from "./pages/fornecedores/update";
 import CreateProduto from "./pages/produtos/create";
 import UpdateProduto from "./pages/produtos/update";
+import EstoqueProduto from "./pages/produtos/estoque";
 import Clientes from "./pages/clientes/Clientes";
 import CreateCliente from "./pages/clientes/create";
 import UpdateCliente from "./pages/clientes/update";
@@ -38,6 +42,7 @@ import RealizarServico from "./pages/realizarServico";
 function App() {
   return (
     <Router>
+      <ToastContainer autoclose={3000} />
       <Topbar />
       <div className="container">
         <Sidebar />
@@ -46,13 +51,14 @@ function App() {
           <Route path="produtos" element={<Produtos />} />
           <Route path="create-prod" element={<CreateProduto />} />
           <Route path="update-prod" element={<UpdateProduto />} />
+          <Route path="estoque-prod" element={<EstoqueProduto />} />
 
           <Route path="servicos" element={<Servicos />} />
           <Route path="create-serv" element={<CreateServico />} />
           <Route path="update-serv" element={<UpdateServico />} />
           <Route path="list-serv" element={<ListServicos />} />
           <Route path="servicos-vendas" element={<ServicosVendas />} />
-          
+
           <Route path="realizar-servico" element={<RealizarServico />} />
 
           <Route path="funcionarios" element={<Funcionarios />} />

@@ -36,7 +36,7 @@ export const Container = styled.form`
         height: 1rem;
     }
 
-    button[type='submit']{
+    button[type='submit'], button[type='button']{
         width: 100%;
         padding: 0 1.5rem;
         height: 2.5rem;
@@ -77,7 +77,8 @@ export const GenderContainerType = styled.div`
 export const CodBarrasContainer = styled.form`
     margin: auto;
     width: 60%;
-
+    text-align: center;
+    
     h2{
         /* color: var(--text-title); */
         font-size: 1.5rem;
@@ -105,7 +106,7 @@ export const CodBarrasContainer = styled.form`
     
     }
 
-    button[type='submit']{
+    button[type='submit'], button[type='button'], {
         padding: 0 1.5rem;
         height: 2.5rem;
         background: #2c3e4e;

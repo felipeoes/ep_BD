@@ -6,6 +6,10 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/pt-BR';
 
+import { toast } from 'react-toastify';
+import api from '../../../services/api';
+import { useNavigate } from 'react-router-dom';
+
 import { Container, GenderContainer, GenderContainerType } from "./styles";
 
 function CreateCliente() {
@@ -15,24 +19,42 @@ function CreateCliente() {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
   registerLocale('es', es);
+  let navigate = useNavigate();
 
   const handleCreateNewCliente = useCallback(async (event) => {
     event.preventDefault();
-    const obg = {
-      name,
-      cpf,
-      birthDate,
-      address,
-      gender,
-      phoneNumber,
-      mobileNumber,
-      email,
+    try {
+      console.log(birthDate);
+      const obg = {
+        nome: name,
+        cpf,
+        data_nascimento: (birthDate.getFullYear() + "-" + ((birthDate.getMonth() + 1)) + "-" + (birthDate.getDate())),
+        sexo: gender,
+        email,
+        id_beneficios: 1,
+      }
+      console.log(obg);
+
+      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+      const response = await api.post(`clientes/`, obg);
+
+      await api.post('clientes-telefones', {
+        cpf,
+        telefone: phoneNumber,
+      });
+
+      console.log(response);
+      toast.success("Cliente cadastrado com sucesso!");
+      navigate(`/clientes`);
+
+    } catch (error) {
+      toast.error("Erro no casdastro do cliente!");
+      console.log('erro');
+      console.log(error);
     }
-    console.log(obg);
-  }, [name, cpf, birthDate, address, gender, phoneNumber, mobileNumber, email]);
+  }, [name, cpf, birthDate, gender, navigate, email, phoneNumber]);
 
   return (
     <div className="clientes">
@@ -44,12 +66,14 @@ function CreateCliente() {
           placeholder="Nome"
           value={name}
           onChange={(event) => setName(event.target.value)}
+          required
         />
         <input
-          type="text"
+          type="number"
           placeholder="CPF"
           value={cpf}
           onChange={(event) => setCpf(event.target.value)}
+          required
         />
 
         <input
@@ -57,34 +81,33 @@ function CreateCliente() {
           placeholder="Endereço"
           value={address}
           onChange={(event) => setAddress(event.target.value)}
+          required
         />
         <input
           type="text"
           placeholder="Telefone"
           value={phoneNumber}
           onChange={(event) => setPhoneNumber(event.target.value)}
+          required
         />
         <input
-          type="text"
-          placeholder="Celular"
-          value={mobileNumber}
-          onChange={(event) => setMobileNumber(event.target.value)}
-        />
-        <input
-          type="text"
+          type="email"
           placeholder="E-mail"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          required
         />
         <DatePicker locale='es' selected={birthDate} onChange={(date) => setBirthDate(date)} dateFormat="dd/MM/yyyy" placeholderText="Data de Nascimento" />
         <GenderContainer>
           <GenderContainerType>
-            <label htmlFor="sexo_masc">Masculino</label>
-            <input id="sexo_masc" type="radio" name="sexo" value="masculino" onChange={(event) => setGender(event.target.value)} />
+            <label htmlFor="sexo_masc">Masculino
+              <input id="sexo_masc" type="radio" name="sexo" value="M" onChange={(event) => setGender(event.target.value)} />
+            </label>
           </GenderContainerType>
           <GenderContainerType>
-            <label htmlFor="sexo_fem">Feminino</label>
-            <input type="radio" id="sexo_fem" name="sexo" value="feminino" onChange={(event) => setGender(event.target.value)} />
+            <label htmlFor="sexo_fem">Feminino
+              <input type="radio" id="sexo_fem" name="sexo" value="F" onChange={(event) => setGender(event.target.value)} />
+            </label>
           </GenderContainerType>
         </GenderContainer>
 

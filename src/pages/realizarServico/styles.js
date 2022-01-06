@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.form`
     margin: auto;
     width: 60%;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 70px;
 
     h2{
         /* color: var(--text-title); */
@@ -10,8 +13,12 @@ export const Container = styled.form`
         text-align: center;
     }
 
+    p.total{
+        font-weight: bold;
+    }
+
     input, select{
-        width: 100%;
+        width: 40%;
         padding: 0 0.25rem;
         height: 2.2rem;
         border-radius: 0.25rem;
@@ -37,7 +44,7 @@ export const Container = styled.form`
     }
 
     button[type='submit']{
-        width: 100%;
+        width: 40%;
         padding: 0 1.5rem;
         height: 2.5rem;
         background: #2c3e4e;
@@ -72,4 +79,79 @@ export const GenderContainerType = styled.div`
         width: 1rem;
     }
 
+`;
+
+export const CNPJContainer = styled.form`
+    margin: auto;
+    width: 60%;
+
+    h2{
+        /* color: var(--text-title); */
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    input, select{
+        width: 30%;
+        margin-right: 50px;
+
+        padding: 0 0.25rem;
+        height: 2.2rem;
+        border-radius: 0.25rem;
+
+        border: 1px solid #d7d7d7;
+        background: #e7e9ee;
+
+        font-weight: 400;
+        font-size: 1rem;
+        margin-top: 1rem;
+
+        &::placeholder{
+            color: var(--text-body);
+        }
+
+        
+        &.preco{
+            width: 50px;
+        }
+    
+    }
+
+    button[type='submit']{
+        padding: 0 1.5rem;
+        height: 2.5rem;
+        background: #2c3e4e;
+        color: #fff;
+        border-radius: 0.25rem;
+        border: 0;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+        width: 30%;
+    
+        transition: filter 0.2s;
+    
+        &:hover{
+            filter: brightness(0.9);
+        }
+    }
+
+    button[type='button']{
+        padding: 0 1.5rem;
+        height: 2.5rem;
+        background: #2c3e4e;
+        color: #fff;
+        border-radius: 0.25rem;
+        border: 0;
+        font-size: 1rem;
+        margin-top: 1.5rem;
+        width: 40%;
+        margin-left: 10px;
+    
+        transition: filter 0.2s;
+    
+        &:hover{
+            filter: brightness(0.9);
+        }
+
+    }
 `;

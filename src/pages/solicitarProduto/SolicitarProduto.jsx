@@ -7,39 +7,83 @@ import DatePicker, { registerLocale } from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import es from 'date-fns/locale/pt-BR';
 
+import { toast } from 'react-toastify';
+import api from '../../services/api';
+import { useNavigate } from 'react-router-dom';
+
 import { Container, CNPJContainer } from "./styles";
 
 function SolicitarProduto() {
 
     const [cnpj, setCnpj] = useState("");
+    const [nomeFornecedor, setNomeFornecedor] = useState("");
     const [codigoBarras, setCodigoBarras] = useState("");
+    const [nomeProduto, setNomeProduto] = useState("");
+    const [precoProduto, setPrecoProduto] = useState(0);
     const [dataValidade, setDataValidade] = useState("");
     const [quantidade, setQuantidade] = useState("");
 
     registerLocale('es', es);
+    let navigate = useNavigate();
 
-    const handlePesquisaCNPJ = useCallback((event) => {
+    const handlePesquisaCNPJ = useCallback(async (event) => {
         event.preventDefault();
         //pesquisa cnpj
         console.log('cnpj');
-    }, []);
 
-    const handlePesquisaCodBarras = useCallback((event) => {
+        try {
+            api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+            const response = await api.get(`fornecedores/${cnpj}`);
+            const fornecedor = response.data;
+            setNomeFornecedor(fornecedor.razao_social);
+        } catch {
+            toast.error('Fornecedor não encontrado');
+            setNomeFornecedor("");
+        }
+
+    }, [cnpj]);
+
+    const handlePesquisaCodBarras = useCallback(async (event) => {
         event.preventDefault();
         //pesquisa cod barras
         console.log('cod barras');
-    }, []);
-
-    const handlePedidoFornecedor = useCallback((event) => {
-        event.preventDefault();
-        const obg = {
-            cnpj,
-            codigoBarras,
-            dataValidade,
-            quantidade
+        try {
+            api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+            const response = await api.get(`produtos/${codigoBarras}`);
+            const produto = response.data;
+            setNomeProduto(produto.nome);
+            setPrecoProduto(produto.preco);
+        } catch {
+            toast.error('Produto não encontrado');
+            setNomeProduto("");
         }
-        console.log(obg);
-    }, [cnpj, codigoBarras, dataValidade, quantidade]);
+
+    }, [codigoBarras]);
+
+    const handlePedidoFornecedor = useCallback(async (event) => {
+        event.preventDefault();
+        try {
+            const obg = {
+                cnpj_forn: cnpj,
+                codigo_barras: codigoBarras,
+                quantidade,
+                valor_total: precoProduto * quantidade,
+                num_func: 9873271,
+                numero_pedido: Math.floor(Math.random() * 99999) + 1
+            }
+            console.log(obg);
+            api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+            const response = await api.post(`solicitacoes-produtos/`, obg);
+            console.log(response.data);
+
+            toast.success('Pedido realizado com sucesso!');
+            navigate(`/fornecedores`);
+
+        } catch {
+            toast.error('Erro na realização do pedido.');
+        }
+
+    }, [cnpj, codigoBarras, quantidade, precoProduto, navigate]);
 
     return (
         <div className="solicitarProduto">
@@ -51,11 +95,12 @@ function SolicitarProduto() {
                         placeholder="Digite o número do CNPJ do fornecedor"
                         value={cnpj}
                         onChange={(event) => setCnpj(event.target.value)}
+                        required
                     />
                     <input
                         type="text"
                         placeholder="Nome Fornecedor"
-                        value={cnpj}
+                        value={nomeFornecedor}
                         readOnly
                     />
                     <button type="submit">Pesquisar</button>
@@ -72,7 +117,7 @@ function SolicitarProduto() {
                     <input
                         type="text"
                         placeholder="Nome Produto"
-                        value={codigoBarras}
+                        value={nomeProduto}
                         readOnly
                     />
                     <button type="submit">Pesquisar</button>
@@ -93,6 +138,11 @@ function SolicitarProduto() {
                     onChange={(date) => setDataValidade(date)}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Selecione a data de validade esperada"
+                />
+                <input
+                    type="text"
+                    placeholder="Valor Total"
+                    value={`Total a pagar: R$ ${quantidade * precoProduto} `}
                 />
                 <button type="submit">Enviar Pedido</button>
             </Container>

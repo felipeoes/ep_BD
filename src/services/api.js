@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://farma-usp.herokuapp.com/',
-    headers: {
-        'Access-Control-Allow-Origin': '*'
-    }
+    baseURL: 'https://farma-usp.herokuapp.com/'
 });
 
 export default api;

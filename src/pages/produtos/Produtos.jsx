@@ -21,6 +21,11 @@ export default function Produtos() {
             <Edit color="primary" />
             <Link to='/update-prod'><CardTitle>Alterar Produto</CardTitle></Link>
           </Card>
+
+          <Card>
+            <Search color="primary" />
+            <Link to='/estoque-prod'><CardTitle>Consultar Estoque</CardTitle></Link>
+          </Card>
         </CardContainer>
       </Container>
     </div>

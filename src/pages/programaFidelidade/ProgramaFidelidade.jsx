@@ -20,12 +20,6 @@ export default function ProgramaFidelidade() {
                         <Link to='/update-fid'><CardTitle>Atualizar Programa</CardTitle></Link>
                     </Card>
 
-
-                    <Card>
-                        <Search color="primary" />
-                        <Link to='/srch-fid'><CardTitle>Pesquisar Programa</CardTitle></Link>
-                    </Card>
-
                     <Card>
                         <Ballot color="primary" />
                         <Link to='/list-fid'><CardTitle>Listar Programas</CardTitle></Link>

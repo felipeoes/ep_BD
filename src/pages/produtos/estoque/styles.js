@@ -3,9 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.form`
     margin: auto;
     width: 60%;
-    font-size: 1.5rem;
-    text-align: center;
-    margin-top: 70px;
 
     h2{
         /* color: var(--text-title); */
@@ -13,16 +10,8 @@ export const Container = styled.form`
         text-align: center;
     }
 
-    p.total{
-        font-weight: bold;
-    }
-
-    p.programa{
-        font-size: 1rem;
-    }
-
     input, select{
-        width: 40%;
+        width: 100%;
         padding: 0 0.25rem;
         height: 2.2rem;
         border-radius: 0.25rem;
@@ -47,8 +36,8 @@ export const Container = styled.form`
         height: 1rem;
     }
 
-    button[type='submit']{
-        width: 40%;
+    button[type='submit'], button[type='button']{
+        width: 100%;
         padding: 0 1.5rem;
         height: 2.5rem;
         background: #2c3e4e;
@@ -85,10 +74,11 @@ export const GenderContainerType = styled.div`
 
 `;
 
-export const CNPJContainer = styled.form`
+export const CodBarrasContainer = styled.form`
     margin: auto;
     width: 60%;
-
+    text-align: center;
+    
     h2{
         /* color: var(--text-title); */
         font-size: 1.5rem;
@@ -113,11 +103,6 @@ export const CNPJContainer = styled.form`
         &::placeholder{
             color: var(--text-body);
         }
-
-        
-        &.preco{
-            width: 50px;
-        }
     
     }
 
@@ -137,25 +122,5 @@ export const CNPJContainer = styled.form`
         &:hover{
             filter: brightness(0.9);
         }
-    }
-
-    button[type='button']{
-        padding: 0 1.5rem;
-        height: 2.5rem;
-        background: #2c3e4e;
-        color: #fff;
-        border-radius: 0.25rem;
-        border: 0;
-        font-size: 1rem;
-        margin-top: 1.5rem;
-        width: 40%;
-        margin-left: 10px;
-    
-        transition: filter 0.2s;
-    
-        &:hover{
-            filter: brightness(0.9);
-        }
-
     }
 `;

@@ -6,13 +6,14 @@ import { Container, CodBarrasContainer } from "./styles";
 import { toast } from 'react-toastify';
 import api from '../../../services/api';
 
-function UpdateProduto() {
+function EstoqueProduto() {
 
   const [pesquisaCodBarras, setPesquisaCodBarras] = useState(false);
   const [codBarras, setCodBarras] = useState("");
   const [nome, setNome] = useState("");
   const [categoria, setCategoria] = useState("");
   const [preco, setPreco] = useState("");
+  const [randomStock, setRandomStock] = useState(Math.floor(Math.random() * 100) + 20);
 
   let navigate = useNavigate();
 
@@ -67,7 +68,7 @@ function UpdateProduto() {
     <div className="produtos">
 
       <CodBarrasContainer onSubmit={handlePesquisarCodBarras}>
-        <h2>Alterar Produto</h2>
+        <h2>Consultar estoque de produto</h2>
         <div>
           <input
             type="text"
@@ -89,27 +90,34 @@ function UpdateProduto() {
             placeholder="Nome"
             value={nome}
             onChange={(event) => setNome(event.target.value)}
-            required
+            readOnly
           />
           <input
             type="text"
             placeholder="Categoria"
             value={categoria}
             onChange={(event) => setCategoria(event.target.value)}
-            required
+            readOnly
           />
           <input
             type="number"
             placeholder="Preço"
             value={preco}
             onChange={(event) => setPreco(event.target.value)}
-            required
+            readOnly
           />
-          <button type="submit">Atualizar</button>
+          <input
+            type="text"
+            placeholder="Estoque"
+            value={`${randomStock} unidades`}
+            readOnly
+          />
+          <button type="button" onClick={() => navigate(`/produtos`)}>Voltar</button>
         </Container>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 }
 
-export default UpdateProduto;
+export default EstoqueProduto;
