@@ -1,82 +1,179 @@
-.topbar{
-    width:100%;
-    height: 50px;
-    background-color: white;
-    position: sticky;
-    top:0;
-    z-index:999;
+.topbar {
+  width: 100%;
+  height: 40px;
+  border: 0px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  margin-top: 1.575rem;
 }
 
-.topbarWrapper{
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.topbarWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.topRight{
-    display: flex;
-    float: right;
-    justify-content: flex-end;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex:6;
-}
-.topLeft{
-    display: flex;
-    align-items: center;
-    padding-bottom: 7px;
-    background-color: #2C3E4E;
-    flex:1;
-}
-.logoTitle{
-    font-size: 30px;
-    color: white;
-    margin-left: 5px;
-    margin-top: 25px;
-}
-.logoImg{
-    margin-top: 15px;
-    height: 60px;
-    width: 60px;
-}
-.userIcon{
-    height: 30px;
-    width: 30px;
-    cursor: pointer;
-    border-radius: 50%;
-}
-.topbarIconsContainer{
-    position: relative;
-    cursor: pointer;
-    margin-right: 10px;
-    color: #555;
-}
-.topIconBadge{
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    top:-5px;
-    right: -5px;
-    background-color: #F1C01C;
-    border-radius: 50%;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    font-size: 10px;
+.topRight {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
-.topBarBolaStatusUsuario{
-    background-color: #5D8C7B;
-    border-radius: 50%;
-    width: 7px;
-    height: 7px;
-    position: absolute;
-    margin-top: 17px;
-    margin-right: 1px;
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  margin-left: 7px;
 }
 
-hr { display: block; height: 1px;
-    border: 0; border-top: 1px solid #2C3E4E;
-    margin: 1em 0; padding: 0; }
+.topbarTitle {
+  margin-left: 1.875rem;
+  font-size: 20px;
+  font-family: MontserratRegular;
+  color: #252733;
+}
+.topLeft {
+  display: flex;
+  align-items: center;
+  padding-bottom: 7px;
+}
+.userIcon {
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.topbarIconsContainer {
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+  color: #555;
+}
+.topIconBadge {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #f1c01c;
+  border-radius: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.topbarUsername {
+  margin-right: 14px;
+  font-family: MontserratLight;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.20000000298023224px;
+  text-align: right;
+  color: #252733;
+}
+.topBarBolaStatusUsuario {
+  background-color: #5d8c7b;
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  margin-top: 17px;
+  margin-right: 1px;
+}
+
+.divider {
+  height: 32px;
+  width: 0px;
+  left: 923px;
+  top: 10px;
+  border-radius: 0px;
+  border: 1px solid #dfe0eb;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #2c3e4e;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.dropdown {
+  width: 150px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.menu-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f8fc;
+  margin-right: 25px;
+}
+
+.menu-trigger {
+  border-radius: 90px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 6px;
+  border: none;
+  vertical-align: middle;
+  transition: box-shadow 0.4s ease;
+  margin-left: auto;
+  background-color: #f7f8fc;
+}
+
+.menu-trigger img {
+  border-radius: 90px;
+}
+
+.menu {
+  background: #ffffff;
+  border-radius: 8px;
+  position: absolute;
+  top: 45px;
+  width: 90px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  margin-left: 80px;
+}
+
+.menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  border-bottom: 1px solid #dddddd;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #333333;
+  padding: 15px 20px;
+  display: block;
+}
+
+.menu li a:hover {
+  color: #333333;
+  background-color: transparent;
+}

@@ -1,6 +1,13 @@
-.clientes{
-    flex:6;
-    margin-top: 16px;
-    background-color: #F0F0F0;
+.clientes {
+  flex: 6;
+  margin-top: 16px;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 100%;
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}

@@ -1,83 +1,127 @@
 import "./Sidebar.css";
-import { Dashboard, Person, PersonAddAlt1, Medication, MedicalServices, Loyalty, LocalShipping, LocalGroceryStore } from '@mui/icons-material/';
-import userIcon from '../../images/userIcon.png';
 import {
-    Link,
-} from "react-router-dom";
-export default function Sidebar() {
-    return (
-        <div className="sidebar">
-            <div className="sidebarWrapper">
-                <div className="sidebarMenu">
-                    <h3 className="sidebarTitle">Vendas</h3>
-                    <ul className="sidebarList">
-                        <Link to="/">
-                            <li className="sidebarListItem">
-                                <Dashboard className="sidebarIcon" /> Dashboard
-                            </li>
-                        </Link>
-                        <Link to="/servicos-vendas">
-                            <li className="sidebarListItem">
-                                <MedicalServices className="sidebarIcon" /> Serviços
-                            </li>
-                        </Link>
-                        <Link to="/vender">
-                            <li className="sidebarListItem">
-                                <LocalGroceryStore className="sidebarIcon" /> Vender
-                            </li>
-                        </Link>
-                    </ul>
-                    <h3 className="sidebarTitle">Gerenciar</h3>
-                    <ul className="sidebarList">
-                        <Link to="/clientes">
-                            <li className="sidebarListItem">
-                                <PersonAddAlt1 className="sidebarIcon" /> Clientes
-                            </li>
-                        </Link>
-                        <Link to="/funcionarios">
-                            <li className="sidebarListItem">
-                                <Person className="sidebarIcon" /> Funcionários
-                            </li>
-                        </Link>
-                        <Link to="/produtos">
-                            <li className="sidebarListItem">
-                                <Medication className="sidebarIcon" /> Produtos
-                            </li>
-                        </Link>
-                        <Link to="/servicos">
-                            <li className="sidebarListItem">
-                                <MedicalServices className="sidebarIcon" /> Serviços
-                            </li>
-                        </Link>
-                        <Link to="/fidelidade">
-                            <li className="sidebarListItem">
-                                <Loyalty className="sidebarIcon" /> Programa de fidelidade
-                            </li>
-                        </Link>
-                        <Link to="/fornecedores">
-                            <li className="sidebarListItem">
-                                <LocalShipping className="sidebarIcon" /> Fornecedores
-                            </li>
-                        </Link>
-                        <Link to="/solicitarProduto">
-                            <li className="sidebarListItem">
-                                <Medication className="sidebarIcon" /> Solicitar Produtos ao Fornecedor
-                            </li>
-                        </Link>
-                    </ul>
-                </div>
+  Dashboard,
+  Person,
+  PersonAddAlt1,
+  Medication,
+  MedicalServices,
+  Loyalty,
+  LocalShipping,
+  LocalGroceryStore,
+} from "@mui/icons-material/";
+import logo from "../../assets/images/logoUSP.svg";
 
-                <div className="userInfo">
-                    <img alt="user icone" className="userIcon" src={userIcon} />
-                    <div className="message">
-                        <span className="sideBarTitle">Nome Usuário</span>
-                        <div className="sideBarMessageContainer">
-                            <div className="bolaStatusUsuario"></div>
-                            <span className="sideBarMessage">Online</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+const salesPages = [
+  ["Dashboard", "/"],
+  ["Serviços", "/servicos-vendas"],
+  ["Vender", "/vender"],
+];
+
+const manegementPages = [
+  ["Clientes", "/clientes"],
+  ["Funcionários", "/funcionarios"],
+  ["Produtos", "/produtos"],
+  ["Gerenciar serviços", "/servicos"],
+  ["Programa de fidelidade", "/fidelidade"],
+  ["Fornecedores", "/fornecedores"],
+  ["Solicitações", "/solicitarProduto"],
+];
+
+export default function Sidebar({ updatePage }) {
+  const [clickedPage, setClickedPage] = useState(0);
+
+  function clickHandler(index) {
+    console.log(index);
+    setClickedPage(index);
+  }
+
+  const SidebarItem = ({ Icon, path, itemName, clicked, onClick }) => (
+    <Link to={path} onClick={onClick}>
+      <li className={`sidebarListItem ${clicked ? "active" : ""}`}>
+        {itemName === "Dashboard" ? (
+          <Dashboard className="sidebarIcon" />
+        ) : itemName === "Serviços" ? (
+          <MedicalServices className="sidebarIcon" />
+        ) : itemName === "Vender" ? (
+          <LocalGroceryStore className="sidebarIcon" />
+        ) : itemName === "Clientes" ? (
+          <PersonAddAlt1 className="sidebarIcon" />
+        ) : itemName === "Funcionários" ? (
+          <Person className="sidebarIcon" />
+        ) : itemName === "Produtos" ? (
+          <Medication className="sidebarIcon" />
+        ) : itemName === "Gerenciar serviços" ? (
+          <MedicalServices className="sidebarIcon" />
+        ) : itemName === "Programa de fidelidade" ? (
+          <Loyalty className="sidebarIcon" />
+        ) : itemName === "Fornecedores" ? (
+          <LocalShipping className="sidebarIcon" />
+        ) : itemName === "Solicitações" ? (
+          <Medication className="sidebarIcon" />
+        ) : (
+          ""
+        )}{" "}
+        {itemName}
+      </li>
+    </Link>
+  );
+
+  return (
+    <div className="sidebar">
+      <div className="sidebarWrapper">
+        <div className="topLeft">
+          <img alt="logo" className="logoImg" src={logo} />
+          <span className="logoTitle">FarmaUSP</span>
         </div>
-    )
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">Vendas</h3>
+          <ul className="sidebarList">
+            {salesPages.map((i) => (
+              <SidebarItem
+                key={i}
+                path={i[1]}
+                itemName={i[0]}
+                clicked={i[0] === clickedPage}
+                onClick={() => {
+                  clickHandler(i[0]);
+                  updatePage(i[0]);
+                }}
+              />
+            ))}
+          </ul>
+
+          <h3 className="sidebarTitle">Gerenciar</h3>
+
+          <ul className="sidebarList">
+            {manegementPages.map((i) => (
+              <SidebarItem
+                key={i}
+                path={i[1]}
+                itemName={i[0]}
+                clicked={i[0] === clickedPage}
+                onClick={() => {
+                  clickHandler(i[0]);
+                  updatePage(i[0]);
+                }}
+              />
+            ))}
+          </ul>
+        </div>
+
+        {/* <div className="userInfo">
+          <img alt="user icone" className="userIcon" src={userIcon} />
+          <div className="message">
+            <span className="sideBarTitle">Nome Usuário</span>
+            <div className="sideBarMessageContainer">
+              <div className="bolaStatusUsuario"></div>
+              <span className="sideBarMessage">Online</span>
+            </div>
+          </div>
+        </div> */}
+      </div>
+    </div>
+  );
 }

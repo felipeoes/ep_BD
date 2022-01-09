@@ -1,6 +1,5 @@
 .dashboard{
-    flex:6;
+    flex:3;
     margin-top: 16px;
-    background-color: #F0F0F0;
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+html, body { height: 100%; overflow: hidden }

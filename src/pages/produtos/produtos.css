@@ -1,6 +1,15 @@
-.produtos{
-    flex:6;
-    margin-top: 16px;
-    background-color: #F0F0F0;
+.content {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}

@@ -4,7 +4,7 @@ export const Container = styled.div`
     margin: auto;
     width: 75%;
     text-align: center;
-
+    
     h2{
         /* color: var(--text-title); */
         font-size: 1.5rem;

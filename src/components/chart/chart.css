@@ -1,6 +1,7 @@
 .chart{
     margin:20px;
     padding: 20px;
+    border-radius: 8px;
     -webkit-box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32); 
     box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32);
     background-color: white;

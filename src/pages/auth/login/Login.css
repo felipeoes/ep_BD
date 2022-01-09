@@ -1,0 +1,32 @@
+a.loginLink:link {
+  font-family: MontserratBold;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  color: #3751ff;
+  text-decoration-line: none;
+}
+
+a.loginLink:visited {
+  color: #3751ff;
+  text-decoration-line: none;
+}
+
+a.loginLink:hover {
+  color: rgb(222, 221, 223);
+  background-color: transparent;
+}
+a.loginLink:active {
+  font-family: MontserratBold;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.2px;
+  color: #3751ff;
+  text-decoration-line: none;
+}

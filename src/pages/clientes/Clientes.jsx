@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PersonAddAlt1, Edit, Search } from '@mui/icons-material/';
-
+import { PersonAddAlt1, Edit, Search } from "@mui/icons-material/";
 import "./clientes.css";
 
 import { Container, Card, CardTitle, CardContainer } from "./styles.js";
@@ -14,17 +13,23 @@ export default function Clientes() {
         <CardContainer>
           <Card>
             <PersonAddAlt1 color="primary" />
-            <Link to='/create-cli'><CardTitle>Cadastrar Clientes</CardTitle></Link>
+            <Link to="/create-cli">
+              <CardTitle>Cadastrar Clientes</CardTitle>
+            </Link>
           </Card>
 
           <Card>
             <Edit color="primary" />
-            <Link to='/update-cli'><CardTitle>Alterar Clientes</CardTitle></Link>
+            <Link to="/update-cli">
+              <CardTitle>Alterar Clientes</CardTitle>
+            </Link>
           </Card>
 
           <Card>
             <Search color="primary" />
-            <Link to='/srch-cli'><CardTitle>Pesquisar Cliente</CardTitle></Link>
+            <Link to="/srch-cli">
+              <CardTitle>Pesquisar Cliente</CardTitle>
+            </Link>
           </Card>
         </CardContainer>
       </Container>

@@ -8,14 +8,22 @@
     flex:1;
     margin:0px 20px;
     padding: 30px;
+    border: 1px #DFE0EB solid;
     border-radius: 10px;
     cursor: pointer;
     justify-content: space-between;
     display: flex;
     align-items: center;
     background-color: white;
-    -webkit-box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32); 
-    box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32);
+    /* -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
+    box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); */
+}
+
+.featuredItem:hover {
+    border-color: #3751FF;
+    color: #3751FF;
+    -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
+    box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32);
 }
 .featuredIconContainer{
     float: left;
@@ -25,8 +33,10 @@
     float: right;
 }
 .featuredTitle{
-    font-size: 30px;
+    font-family: MontserrarRegular;
+    font-size: 24px;
 }
 .featuredMessage{
+    font-family: MontserrarRegular;
     font-size: 20px;
 }

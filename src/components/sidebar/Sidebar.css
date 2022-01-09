@@ -1,94 +1,124 @@
-.sidebar{
-    flex:1;
-    height: calc(100vh - 50px);
-    background-color: #2C3E4E;
-    position: sticky;
+.sidebar {
+  width: 14rem;
+  background-color: #363740;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.sidebarWrapper{
-    padding: 20px;
-    color: #2C3E4E;
+.sidebarWrapper {
+  padding: 20px;
+  padding-top: 0;
+  margin-top: 0;
+  color: #2c3e4e;
+  position: sticky;
 }
 
-.sidebarMenu{
-    margin-bottom: 10px;
+.logoTitle {
+  font-family: MontserratBold;
+  font-size: 16px;
+  color: #a4a6b3;
+  margin-left: 5px;
+  margin-top: 1.875rem;
 }
-.sidebarTitle{
-    font-size: 25px;
-    color: rgb(193, 193, 194);
+.logoImg {
+  margin-top: 30px;
+  height: 30px;
+  width: 30px;
 }
 
-.sidebarList{
-    list-style: none;
-    padding: 5px;
-    color: rgb(222, 221, 223);
+.sidebarMenu {
+  margin-bottom: 10px;
+}
 
+.sidebarTitle {
+  padding-left: 14px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  font-family: MontserratRegular;
+  font-size: 16px;
+  color: rgb(193, 193, 194);
 }
-.sidebarListItem{
-    padding: 10px;
-    cursor: pointer;
-    align-items: center;
-    display: flex;
-    border-radius: 10px;
-    font-size: 18px;
+
+.sidebarList {
+  list-style: none;
+  padding: 5px;
+  color: rgb(222, 221, 223);
 }
+.sidebarListItem {
+  font-family: MontserratLight;
+  padding: 10px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  font-size: 14px;
+  color: #a4a6b3;
+  border-radius: 6px;
+}
+
 a:visited {
-    color: rgb(222, 221, 223);
-    text-decoration-line: none;
+  color: rgb(222, 221, 223);
+  text-decoration-line: none;
 }
-a:link {color: rgb(222, 221, 223);
-    text-decoration-line: none;
 
-}  
-a:hover {color: rgb(222, 221, 223)}  
-a:active {color: rgb(222, 221, 223)}  
+a:link {
+  color: rgb(222, 221, 223);
+  text-decoration-line: none;
+}
+
+a:hover {
+  color: rgb(222, 221, 223);
+  background-color: #9fa2b4;
+}
+a:active {
+  color: rgb(223, 221, 223);
+}
 
 .sidebarListItem.active,
-.sidebarListItem:hover{
-    background-color:#2C3949;
-}
-.sidebarIcon{
-    margin-right: 5px;
-    font-size: 20px !important;
-}
-.userInfo{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    flex:1;
-    margin:0px 20px;
-    padding: 30px;
-    border-radius: 10px;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-}
-.userIcon{
-    height: 60px;
-    width: 60px;
-    cursor: pointer;
-    border-radius: 50%;
-    float: left;
+.sidebarListItem:hover {
+  background-color: rgba(159, 162, 180, 0.08);
+  color: #dde2ff;
 }
 
-
-.sideBarTitle{
-    font-size: 20px;
-    color: rgb(222, 221, 223);
-
+.sidebarIcon {
+  margin-right: 0.8rem;
+  font-size: 18px !important;
 }
-.sideBarMessage{
-    font-size: 15px;
-    color: rgb(222, 221, 223);
 
+.userInfo {
+  display: flex;
+  margin-left: 0px 20px;
+  border-radius: 10px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
 }
-.bolaStatusUsuario{
-    background-color: #5D8C7B;
-    border-radius: 50%;
-    width: 9px;
-    height: 9px;
-    margin-top: 3px;
+
+.userIcon {
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+  border-radius: 50%;
+  float: left;
 }
-.sideBarMessageContainer{
-    display: flex;
+
+.sideBarTitle {
+  font-family: MontserratBold;
+  font-size: 20px;
+  color: rgb(222, 221, 223);
+}
+.sideBarMessage {
+  font-size: 15px;
+  color: rgb(222, 221, 223);
+}
+.bolaStatusUsuario {
+  background-color: #5d8c7b;
+  border-radius: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: 3px;
+}
+.sideBarMessageContainer {
+  display: flex;
 }
