@@ -1,11 +1,12 @@
 import React from "react";
 import ReactLoading from "react-loading";
 
-const Loading = ({ type, color, active, height, width }) =>
-  active ? (
-    <ReactLoading type={type} color={color} height={height} width={width} />
-  ) : (
-    ""
-  );
+const Loading = ({ type, color, active = true, height, width }) =>
+    active ? (
+        <ReactLoading type={type || 'spin'} color={color || '#000'} height={height || '50px'} width={width || '50px'} />
+    ) : (
+        ""
+    );
+
 
 export default Loading;
