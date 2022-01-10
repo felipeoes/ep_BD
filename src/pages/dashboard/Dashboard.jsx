@@ -19,13 +19,12 @@ export default function Dashboard() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  
+
   return (
     <div className="dashboard">
       {data.length ? (
         <AutoScrollContainer className="my-scroll-style">
           <FeaturedInfo data={top5products} suppliers={top5Suppliers} />
-
           <Chart compras={data} />
         </AutoScrollContainer>
       ) : (
@@ -36,7 +35,7 @@ export default function Dashboard() {
             marginTop: "10%",
           }}
         >
-          <Loading />
+          <Loading width={150} height={150} />
         </div>
       )}
     </div>

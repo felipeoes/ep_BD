@@ -67,7 +67,7 @@ function UpdateProduto() {
     <div className="produtos">
 
       <CodBarrasContainer onSubmit={handlePesquisarCodBarras}>
-        <h2>Alterar Produto</h2>
+        <h2 style={{ fontFamily: 'MontserratRegular'}}>Alterar Produto</h2>
         <div>
           <input
             type="text"

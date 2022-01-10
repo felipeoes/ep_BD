@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./servicos.css"
-
+import AutoScrollContainer from "auto-scroll-container";
 import { MedicalServices, Ballot, AddCircle, Edit, Search } from '@mui/icons-material/';
-
 
 import api from "../../services/api";
 import { toast } from "react-toastify";
@@ -22,6 +21,9 @@ import {
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import ServicesModal from "../../components/modal/Modal";
+import PaginatedItems from "../../components/paginate/Paginate";
+import Loading from "../../components/loading/Loading";
 
 export default function Servicos() {
     const [services, setServices] = useState([]);
@@ -87,75 +89,105 @@ export default function Servicos() {
 
     console.log(filteredServices);
 
+    function ReactElementItem({ currentItem }) {
+        return (
+            <>
+                <ServiceCard>
+                    <ServiceCommonInfo>
+                        <ServiceId>{currentItem.id}</ServiceId>
+                    </ServiceCommonInfo>
+                    <ServiceCommonInfo style={{ width: 150 }}>{currentItem.nome}</ServiceCommonInfo>
+                    <ServiceCommonInfo style={{ width: 20 }}> {currentItem.preco}</ServiceCommonInfo>
+                    <ServiceCommonInfo>{currentItem.descricao}</ServiceCommonInfo>
+                    <ServiceEditContainer>
+                        <Edit color="primary" />
+                    </ServiceEditContainer>
+                </ServiceCard>
+            </>
+        );
+    }
+
     return (
         <Container>
-            <div className='content'>
-                <AutocompleteContainer>
-                    <Autocomplete
-                        onSelect={(value) => {
-                            handleOnSelect(value)
-                        }}
-                        id="auto-complete"
-                        autoComplete
-                        includeInputInList
-                        onInputChange={(event, value) => findService(value)}
-                        options={filteredServicesNames}
-                        size="small"
-                        placeholder="Digite o nome do serviço"
-                        style={{
-                            width: 271,
-                            border: 0,
-                            height: 38,
-                            backgroundColor: "white",
-                        }}
-                        renderInput={(params) => (
-                            <TextField
-                                variant="outlined"
-                                placeholder="Digite o nome do serviço"
-                                style={{
-                                    width: 271,
-                                    height: 38,
-                                    backgroundColor: "white",
-                                }}
-                                {...params}
-                                label="Serviço"
-                            ></TextField>
-                        )}
-                    />
-                    <h2> Serviços FarmaUSP </h2>
-                </AutocompleteContainer>
-                <ButtonsContainer>
-                    <AddServiceButton>
-                        Cadastrar serviço
-                        <AddCircle color="white" />
-                    </AddServiceButton>
-                </ButtonsContainer>
+            <AutoScrollContainer
+                className="my-scroll-style"
+                marginTop={0}
+                marginBottom={0.1}
+            >
+                <div className='content'>
+                    <AutocompleteContainer>
+                        <Autocomplete
+                            onSelect={(value) => {
+                                handleOnSelect(value)
+                            }}
+                            id="auto-complete"
+                            autoComplete
+                            includeInputInList
+                            onInputChange={(event, value) => findService(value)}
+                            options={filteredServicesNames}
+                            size="small"
+                            placeholder="Digite o nome do serviço"
+                            style={{
+                                width: 271,
+                                border: 0,
+                                height: 38,
+                                backgroundColor: "white",
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    variant="outlined"
+                                    placeholder="Digite o nome do serviço"
+                                    style={{
+                                        width: 271,
+                                        height: 38,
+                                        backgroundColor: "white",
+                                    }}
+                                    {...params}
+                                    label="Serviço"
+                                ></TextField>
+                            )}
+                        />
+                        <h2> Serviços FarmaUSP </h2>
+                    </AutocompleteContainer>
+                    <ButtonsContainer>
+                        <AddServiceButton>
+                            Cadastrar serviço
+                            <AddCircle color="white" />
+                        </AddServiceButton>
+                    </ButtonsContainer>
 
-                <ServiceLabelsContainer>
-                    <SecondLabelsContainer>
-                        <ServiceLabel style={{ marginLeft: 10 }}>Id</ServiceLabel>
-                        <ServiceLabel style={{ marginLeft: 150 }}>Nome</ServiceLabel>
-                        <ServiceLabel style={{ marginLeft: 150 }}>Preço</ServiceLabel>
-                        <ServiceLabel style={{ marginLeft: 190 }}>Descrição</ServiceLabel>
-                    </SecondLabelsContainer>
-                    <ServiceLabel style={{ marginRight: -15 }}>Ação</ServiceLabel>
-                </ServiceLabelsContainer>
-                {filteredServices.map((service) => (
-                    <ServiceCard>
-                        <ServiceCommonInfo>
-                            <ServiceId>{service.id}</ServiceId>
-                        </ServiceCommonInfo>
-                        <ServiceCommonInfo>{service.nome}</ServiceCommonInfo>
-                        <ServiceCommonInfo>{service.preco}</ServiceCommonInfo>
-                        <ServiceCommonInfo>{service.descricao}</ServiceCommonInfo>
-                        <ServiceEditContainer>
-                            <Edit color="primary" />
-                        </ServiceEditContainer>
-                    </ServiceCard>
-                ))}
-            </div>
+                    <ServiceLabelsContainer>
+                        <div style={{ display: 'flex', width: 500 }}>
+                            <ServiceLabel style={{ marginLeft: 0 }}>
+                                Id do serviço
+                            </ServiceLabel>
+                        </div>
+                        <SecondLabelsContainer>
+                            <ServiceLabel style={{ marginLeft: -270 }}>Nome</ServiceLabel>
+                            <ServiceLabel style={{ marginLeft: 50 }}>Preço</ServiceLabel>
+                            <ServiceLabel style={{ marginRight: 180 }}>Descrição</ServiceLabel>
+                        </SecondLabelsContainer>
+                        <ServiceLabel style={{ marginRight: -15 }}>Ação</ServiceLabel>
+                    </ServiceLabelsContainer>
+                    {filteredServices ? (
+                        <PaginatedItems
+                            itemsPerPage={3}
+                            items={filteredServices}
+                            ReactElementItem={ReactElementItem}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "10%",
+                            }}
+                        >
+                            <Loading width={150} height={150} />
+                        </div>
+                    )}
+                </div>
+            </AutoScrollContainer>
         </Container>
     )
 }
-
-

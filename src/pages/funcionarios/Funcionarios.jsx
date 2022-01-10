@@ -5,6 +5,7 @@ import "./funcionarios.css";
 
 import api from "../../services/api";
 import { toast } from "react-toastify";
+import AutoScrollContainer from "auto-scroll-container";
 
 import {
   Container,
@@ -21,6 +22,9 @@ import {
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import ServicesModal from "../../components/modal/Modal";
+import PaginatedItems from "../../components/paginate/Paginate";
+import Loading from "../../components/loading/Loading";
 
 export default function Funcionarios() {
   const [employees, setEmployees] = useState([]);
@@ -87,77 +91,106 @@ export default function Funcionarios() {
 
   console.log(filteredEmployees);
 
+  function ReactElementItem({ currentItem }) {
+    return (
+      <>
+        <EmployeeCard>
+          <EmployeeCommonInfo style={{ width: 190 }}>
+            <EmployeeName>{currentItem.nome}</EmployeeName>
+          </EmployeeCommonInfo>
+          <EmployeeCommonInfo>{currentItem.funcional}</EmployeeCommonInfo>
+          <EmployeeCommonInfo>{currentItem.sexo}</EmployeeCommonInfo>
+          <EmployeeCommonInfo>{currentItem.tipo_func}</EmployeeCommonInfo>
+          <EmployeeCommonInfo>{currentItem.crf}</EmployeeCommonInfo>
+          <EmployeeCommonInfo>{currentItem.salario}</EmployeeCommonInfo>
+          <EmployeeEditContainer>
+            <Edit color="primary" />
+          </EmployeeEditContainer>
+        </EmployeeCard>
+      </>
+    );
+  }
+
   return (
     <Container>
-      <div className="content">
-        <AutocompleteContainer>
-          <Autocomplete
-            onSelect={(value) => {
-              handleOnSelect(value);
-            }}
-            id="auto-complete"
-            autoComplete
-            includeInputInList
-            onInputChange={(event, value) => findEmployee(value)}
-            options={filteredEmployeesNames}
-            size="small"
-            placeholder="Digite o nome do funcionário"
-            style={{
-              width: 271,
-              border: 0,
-              height: 38,
-              backgroundColor: "white",
-            }}
-            renderInput={(params) => (
-              <TextField
-                variant="outlined"
-                placeholder="Digite o nome do funcionário"
-                style={{
-                  width: 271,
-                  height: 38,
-                  backgroundColor: "white",
-                }}
-                {...params}
-                label="Funcionário"
-              ></TextField>
-            )}
-          />
-          <h2> Funcionários FarmaUSP </h2>
-        </AutocompleteContainer>
-        <ButtonsContainer>
-          <AddEmployeeButton>
-            Cadastrar funcionário
-            <AddCircle color="white" />
-          </AddEmployeeButton>
-        </ButtonsContainer>
+      <AutoScrollContainer
+        className="my-scroll-style"
+        marginTop={0}
+        marginBottom={0.1}
+      >
+        <div className="content">
+          <AutocompleteContainer>
+            <Autocomplete
+              onSelect={(value) => {
+                handleOnSelect(value);
+              }}
+              id="auto-complete"
+              autoComplete
+              includeInputInList
+              onInputChange={(event, value) => findEmployee(value)}
+              options={filteredEmployeesNames}
+              size="small"
+              placeholder="Digite o nome do funcionário"
+              style={{
+                width: 271,
+                border: 0,
+                height: 38,
+                backgroundColor: "white",
+              }}
+              renderInput={(params) => (
+                <TextField
+                  variant="outlined"
+                  placeholder="Digite o nome do funcionário"
+                  style={{
+                    width: 271,
+                    height: 38,
+                    backgroundColor: "white",
+                  }}
+                  {...params}
+                  label="Funcionário"
+                ></TextField>
+              )}
+            />
+            <h2> Funcionários FarmaUSP </h2>
+          </AutocompleteContainer>
+          <ButtonsContainer>
+            <AddEmployeeButton>
+              Cadastrar funcionário
+              <AddCircle color="white" />
+            </AddEmployeeButton>
+          </ButtonsContainer>
 
-        <EmployeeLabelsContainer>
-          <SecondLabelsContainer>
-            <EmployeeLabel style={{ marginLeft: 10 }}>Nome</EmployeeLabel>
-            <EmployeeLabel style={{ marginLeft: 100 }}>Funcional</EmployeeLabel>
-            <EmployeeLabel style={{ marginLeft: 100 }}>Sexo</EmployeeLabel>
-            <EmployeeLabel style={{ marginLeft: 100 }}>Cargo</EmployeeLabel>
-            <EmployeeLabel style={{ marginLeft: 85 }}>CRF</EmployeeLabel>
-            <EmployeeLabel style={{ marginLeft: 80 }}>Salário</EmployeeLabel>
-          </SecondLabelsContainer>
-          <EmployeeLabel style={{ marginRight: -15 }}>Ação</EmployeeLabel>
-        </EmployeeLabelsContainer>
-        {filteredEmployees.map((employee) => (
-          <EmployeeCard>
-            <EmployeeCommonInfo>
-              <EmployeeName>{employee.nome}</EmployeeName>
-            </EmployeeCommonInfo>
-            <EmployeeCommonInfo>{employee.funcional}</EmployeeCommonInfo>
-            <EmployeeCommonInfo>{employee.sexo}</EmployeeCommonInfo>
-            <EmployeeCommonInfo>{employee.tipo_func}</EmployeeCommonInfo>
-            <EmployeeCommonInfo>{employee.crf}</EmployeeCommonInfo>
-            <EmployeeCommonInfo>{employee.salario}</EmployeeCommonInfo>
-            <EmployeeEditContainer>
-              <Edit color="primary" />
-            </EmployeeEditContainer>
-          </EmployeeCard>
-        ))}
-      </div>
-    </Container>
+          <EmployeeLabelsContainer>
+            <SecondLabelsContainer>
+              <EmployeeLabel style={{ marginLeft: 40 }}>Nome</EmployeeLabel>
+              <EmployeeLabel style={{ marginLeft: 180 }}>Funcional</EmployeeLabel>
+              <EmployeeLabel style={{ marginLeft: 90 }}>Sexo</EmployeeLabel>
+              <EmployeeLabel style={{ marginLeft: 110 }}>Cargo</EmployeeLabel>
+              <EmployeeLabel style={{ marginLeft: 120 }}>CRF</EmployeeLabel>
+              <EmployeeLabel style={{ marginLeft: 100 }}>Salário</EmployeeLabel>
+            </SecondLabelsContainer>
+            <EmployeeLabel style={{ marginRight: -15 }}>Ação</EmployeeLabel>
+          </EmployeeLabelsContainer>
+
+          {filteredEmployees ? (
+            <PaginatedItems
+              itemsPerPage={3}
+              items={filteredEmployees}
+              ReactElementItem={ReactElementItem}
+            />
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "10%",
+              }}
+            >
+              <Loading width={150} height={150} />
+            </div>
+          )}
+        </div>
+      </AutoScrollContainer>
+    </Container >
   );
 }

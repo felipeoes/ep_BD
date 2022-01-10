@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { AddCircle, Edit } from "@mui/icons-material/";
 import "./clientes.css";
 
+import AutoScrollContainer from "auto-scroll-container";
+
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
@@ -20,6 +22,9 @@ import {
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+
+import PaginatedItems from "../../components/paginate/Paginate";
+import Loading from "../../components/loading/Loading";
 
 export default function Clientes() {
     const [clients, setClients] = useState([]);
@@ -83,77 +88,106 @@ export default function Clientes() {
         console.log(filteredClientsNames);
     }
 
+    function ReactElementItem({ currentItem }) {
+        return (
+            <>
+                <ClientCard>
+                    <ClientCommonInfo>
+                        <ClientName>{currentItem.nome}</ClientName>
+                    </ClientCommonInfo>
+                    <ClientCommonInfo>{currentItem.cpf}</ClientCommonInfo>
+                    <ClientCommonInfo style={{ width: 150 }}>{currentItem.email}</ClientCommonInfo>
+                    <ClientCommonInfo >{currentItem.sexo}</ClientCommonInfo>
+                    <ClientCommonInfo>{currentItem.data_nascimento.split('-').reverse().join('/')}</ClientCommonInfo>
+                    <ClientCommonInfo>{currentItem.id_beneficios}</ClientCommonInfo>
+                    <ClientEditContainer>
+                        <Edit color="primary" />
+                    </ClientEditContainer>
+                </ClientCard>
+            </>
+        );
+    }
+
     return (
         <Container>
-            <div className='content'>
-                <AutocompleteContainer>
-                    <Autocomplete
-                        onSelect={(value) => {
-                            handleOnSelect(value)
-                        }}
-                        id="auto-complete"
-                        autoComplete
-                        includeInputInList
-                        onInputChange={(event, value) => findClient(value)}
-                        options={filteredClientsNames}
-                        size="small"
-                        placeholder="Digite o nome do cliente"
-                        style={{
-                            width: 271,
-                            border: 0,
-                            height: 38,
-                            backgroundColor: "white",
-                        }}
-                        renderInput={(params) => (
-                            <TextField
-                                variant="outlined"
-                                placeholder="Digite o nome do cliente"
-                                style={{
-                                    width: 271,
-                                    height: 38,
-                                    backgroundColor: "white",
-                                }}
-                                {...params}
-                                label="Cliente"
-                            ></TextField>
-                        )}
-                    />
-                    <h2> Clientes FarmaUSP </h2>
-                </AutocompleteContainer>
-                <ButtonsContainer>
-                    <AddClientButton>
-                        Cadastrar cliente
-                        <AddCircle color="white" />
-                    </AddClientButton>
-                </ButtonsContainer>
+            <AutoScrollContainer
+                className="my-scroll-style"
+                marginTop={0}
+                marginBottom={0.1}
+            >
+                <div className='content'>
+                    <AutocompleteContainer>
+                        <Autocomplete
+                            onSelect={(value) => {
+                                handleOnSelect(value)
+                            }}
+                            id="auto-complete"
+                            autoComplete
+                            includeInputInList
+                            onInputChange={(event, value) => findClient(value)}
+                            options={filteredClientsNames}
+                            size="small"
+                            placeholder="Digite o nome do cliente"
+                            style={{
+                                width: 271,
+                                border: 0,
+                                height: 38,
+                                backgroundColor: "white",
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    variant="outlined"
+                                    placeholder="Digite o nome do cliente"
+                                    style={{
+                                        width: 271,
+                                        height: 38,
+                                        backgroundColor: "white",
+                                    }}
+                                    {...params}
+                                    label="Cliente"
+                                ></TextField>
+                            )}
+                        />
+                        <h2> Clientes FarmaUSP </h2>
+                    </AutocompleteContainer>
+                    <ButtonsContainer>
+                        <AddClientButton>
+                            Cadastrar cliente
+                            <AddCircle color="white" />
+                        </AddClientButton>
+                    </ButtonsContainer>
 
-                <ClientLabelsContainer>
-                    <SecondLabelsContainer>
-                        <ClientLabel style={{ marginLeft: 10 }}>Nome</ClientLabel>
-                        <ClientLabel style={{ marginLeft: 150 }}>CPF</ClientLabel>
-                        <ClientLabel style={{ marginLeft: 150 }}>Email</ClientLabel>
-                        <ClientLabel style={{ marginLeft: 190 }}>Sexo</ClientLabel>
-                        <ClientLabel style={{ marginLeft: 85 }}>Nascimento</ClientLabel>
-                        <ClientLabel style={{ marginLeft: 80 }}>Benefício</ClientLabel>
-                    </SecondLabelsContainer>
-                    <ClientLabel style={{ marginRight: -15 }}>Ação</ClientLabel>
-                </ClientLabelsContainer>
-                {filteredClients.map((client) => (
-                    <ClientCard>
-                        <ClientCommonInfo>
-                            <ClientName>{client.nome}</ClientName>
-                        </ClientCommonInfo>
-                        <ClientCommonInfo>{client.cpf}</ClientCommonInfo>
-                        <ClientCommonInfo>{client.email}</ClientCommonInfo>
-                        <ClientCommonInfo>{client.sexo}</ClientCommonInfo>
-                        <ClientCommonInfo>{client.data_nascimento.split('-').reverse().join('/')}</ClientCommonInfo>
-                        <ClientCommonInfo>{client.id_beneficios}</ClientCommonInfo>
-                        <ClientEditContainer>
-                            <Edit color="primary" />
-                        </ClientEditContainer>
-                    </ClientCard>
-                ))}
-            </div>
+                    <ClientLabelsContainer>
+                        <SecondLabelsContainer>
+                            <ClientLabel style={{ marginLeft: 10 }}>Nome</ClientLabel>
+                            <ClientLabel style={{ marginLeft: 150 }}>CPF</ClientLabel>
+                            <ClientLabel style={{ marginLeft: 150 }}>Email</ClientLabel>
+                            <ClientLabel style={{ marginLeft: 190 }}>Sexo</ClientLabel>
+                            <ClientLabel style={{ marginLeft: 85 }}>Nascimento</ClientLabel>
+                            <ClientLabel style={{ marginLeft: 80 }}>Benefício</ClientLabel>
+                        </SecondLabelsContainer>
+                        <ClientLabel style={{ marginRight: -15 }}>Ação</ClientLabel>
+                    </ClientLabelsContainer>
+
+                    {filteredClients ? (
+                        <PaginatedItems
+                            itemsPerPage={3}
+                            items={filteredClients}
+                            ReactElementItem={ReactElementItem}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "10%",
+                            }}
+                        >
+                            <Loading width={150} height={150} />
+                        </div>
+                    )}
+                </div>
+            </AutoScrollContainer>
         </Container>
     );
 }

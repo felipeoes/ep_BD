@@ -6,7 +6,7 @@ export const Container = styled.div`
   height: 100%;
   flex-direction: column;
   
-  overflow-y: scroll;
+  overflow: auto;
   align-items: center;
 
   h2 {
@@ -18,16 +18,14 @@ export const Container = styled.div`
 
   -ms-overflow-style: none;
   scrollbar-width: none;
-
-  
 `;
 
 export const AutocompleteContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  margin-top: 1.875rem;
-  margin-left: 3rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
 export const ButtonsContainer = styled.div`
@@ -55,8 +53,8 @@ export const AddProductButton = styled.button`
 
   box-shadow: 0px 5px 18px rgba(40, 41, 61, 0.07);
   border-radius: 4px;
-  margin-top: 2rem;
-  margin-left: 1.575rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
 `;
 
 export const ProductLabelsContainer = styled.div`

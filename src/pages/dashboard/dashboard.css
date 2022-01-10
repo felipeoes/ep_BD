@@ -10,8 +10,16 @@ body {
 }
 
 .my-scroll-style {
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  overflow-y: scroll;
+  padding: 0;
+  margin: 0;
+  margin-top: 0;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  height: inherit;
+}
+
+
+.my-scroll-style::-webkit-scrollbar {
+  display: none;
 }
