@@ -21,9 +21,9 @@ export const Topbar = (props, ref) => {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      window.location.replace("https://farma-usp.herokuapp.com/login");
+      window.location.replace("https://frontbd.vercel.app/login");
     } else {
-      fetch("https://farma-usp.herokuapp.com/api/v1/usuarios/auth/user/", {
+      fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/user/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,9 @@ export const Topbar = (props, ref) => {
             >
               <ul>
                 <li>
-                  <a className="menuLink" href="/logout">Sair</a>
+                  <a className="menuLink" href="/logout">
+                    Sair
+                  </a>
                 </li>
               </ul>
             </nav>

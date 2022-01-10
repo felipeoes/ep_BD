@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://farma-usp.herokuapp.com/'
+  baseURL: "https://frontbd.vercel.app/",
 });
 
 export default api;

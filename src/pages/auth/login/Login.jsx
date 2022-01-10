@@ -31,7 +31,7 @@ export default function Login() {
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
-      window.location.replace("https://farma-usp.herokuapp.com/dashboard");
+      window.location.replace("https://frontbd.vercel.app/dashboard");
     } else {
       setLoading(false);
     }

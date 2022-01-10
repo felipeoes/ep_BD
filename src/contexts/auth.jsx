@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   async function Login(userData) {
     const data = JSON.stringify(userData);
 
-    fetch("https://farma-usp.herokuapp.com/api/v1/usuarios/auth/login/", {
+    fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("https://farma-usp.herokuapp.com/dashboard");
+          window.location.replace("https://frontbd.vercel.app/dashboard");
           return true;
         } else {
           setUser(null);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   async function Register(userData) {
     const data = JSON.stringify(userData);
 
-    fetch("https://farma-usp.herokuapp.com/api/v1/usuarios/auth/register/", {
+    fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/register/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("https://farma-usp.herokuapp.com/dashboard");
+          window.location.replace("https://frontbd.vercel.app/dashboard");
         } else {
           setUser(null);
           localStorage.clear();
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
   async function Logout() {
     if (localStorage.getItem("token") !== null) {
-      fetch("https://farma-usp.herokuapp.com/api/v1/usuarios/auth/logout/", {
+      fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/logout/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           localStorage.clear();
-          window.location.replace("https://farma-usp.herokuapp.com/login");
+          window.location.replace("https://frontbd.vercel.app/login");
         });
     }
   }

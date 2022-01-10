@@ -7,7 +7,7 @@ export default function Logout() {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      window.location.replace("https://farma-usp.herokuapp.com/login");
+      window.location.replace("https://frontbd.vercel.app/login");
     } else {
       Logout();
       setLoading(false);
