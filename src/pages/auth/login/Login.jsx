@@ -111,10 +111,6 @@ export default function Login() {
           )}
 
           <div>
-            {/* {errors === true && (
-              <h2>Erro no login, verifique seu email/senha</h2>
-            )} */}
-
             <form onSubmit={handleOnSubmit}>
               <FormContainer>
                 <FormLabel htmlFor="email">EMAIL</FormLabel>

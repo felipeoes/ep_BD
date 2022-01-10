@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { API_AUTH_BASEURL } from "../services/api";
+import { API_AUTH_BASEURL, FRONT_BASEURL } from "../services/api";
 
 const AuthContext = createContext({});
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   async function Login(userData) {
     const data = JSON.stringify(userData);
 
-    fetch(`${API_AUTH_BASEURL}/login`, {
+    fetch(`${API_AUTH_BASEURL}/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("https://frontbd.vercel.app/dashboard");
+          window.location.replace(`${FRONT_BASEURL}/dashboard`);
           return true;
         } else {
           setUser(null);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   async function Register(userData) {
     const data = JSON.stringify(userData);
 
-    fetch(`${API_AUTH_BASEURL}/register`, {
+    fetch(`${API_AUTH_BASEURL}/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("https://frontbd.vercel.app/dashboard");
+          window.location.replace(`${FRONT_BASEURL}/dashboard`);
         } else {
           setUser(null);
           localStorage.clear();
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
   async function Logout() {
     if (localStorage.getItem("token") !== null) {
-      fetch(`${API_AUTH_BASEURL}/logout`, {
+      fetch(`${API_AUTH_BASEURL}/logout/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           localStorage.clear();
-          window.location.replace("https://frontbd.vercel.app/login");
+          window.location.replace(`${FRONT_BASEURL}/login`);
         });
     }
   }
