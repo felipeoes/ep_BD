@@ -37,7 +37,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
-      window.location.replace("http://localhost:3000/dashboard");
+      window.location.replace("https://farma-usp.herokuapp.com/dashboard");
     } else {
       setLoading(false);
     }

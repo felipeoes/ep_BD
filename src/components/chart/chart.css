@@ -1,12 +1,30 @@
-.chart{
-    margin:20px;
-    padding: 20px;
-    border-radius: 8px;
-    -webkit-box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32); 
-    box-shadow: 6px 4px 14px 0px rgba(0,0,0,0.32);
-    background-color: white;
+.chart {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  -webkit-box-shadow: 6px 4px 14px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 6px 4px 14px 0px rgba(0, 0, 0, 0.32);
+  background-color: white;
+
+   overflow: auto;
 }
-.chartTitle{
-    font-size: 25px;
-    margin-bottom: 20px;
+.chartTitle {
+  font-family: MontserratRegular;
+  font-size: 25px;
+  margin-bottom: 20px;
+  margin-top: 0;
+  margin-left: 20px;
+}
+.chartSubtitle {
+  font-family: MontserratLight;
+  margin-bottom: 30px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.1px;
+
+  margin-top: -10px;
+  margin-left: 25px;
+  color: #9fa2b4;
 }

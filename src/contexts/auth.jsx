@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("http://localhost:3000/dashboard");
+          window.location.replace("https://farma-usp.herokuapp.com/dashboard");
           return true;
         } else {
           setUser(null);
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem("token", data.key);
-          window.location.replace("http://localhost:3000/dashboard");
+          window.location.replace("https://farma-usp.herokuapp.com/dashboard");
         } else {
           setUser(null);
           localStorage.clear();
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           localStorage.clear();
-          window.location.replace("http://localhost:3000/login");
+          window.location.replace("https://farma-usp.herokuapp.com/login");
         });
     }
   }

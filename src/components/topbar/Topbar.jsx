@@ -21,7 +21,7 @@ export const Topbar = (props, ref) => {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      window.location.replace("http://localhost:3000/login");
+      window.location.replace("https://farma-usp.herokuapp.com/login");
     } else {
       fetch("https://farma-usp.herokuapp.com/api/v1/usuarios/auth/user/", {
         method: "GET",

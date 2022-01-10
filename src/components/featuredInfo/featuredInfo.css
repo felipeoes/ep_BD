@@ -1,42 +1,49 @@
-.featured{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+.featured {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: -250px;
 }
-.featuredItem{
-    flex:1;
-    margin:0px 20px;
-    padding: 30px;
-    border: 1px #DFE0EB solid;
-    border-radius: 10px;
-    cursor: pointer;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    background-color: white;
-    /* -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
+.featuredItem {
+  flex: 1;
+  margin: 0px 20px;
+  padding: 30px;
+  border: 1px #dfe0eb solid;
+  border-radius: 10px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  max-height: 300px;
+  max-width: 320px;
+  /* -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
     box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); */
 }
 
 .featuredItem:hover {
-    border-color: #3751FF;
-    color: #3751FF;
-    -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
-    box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32);
+  border-color: #3751ff;
+  color: #3751ff;
+  -webkit-box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.32);
+  box-shadow: 1px 0px 1px 0px rgba(0, 0, 0, 0.32);
 }
-.featuredIconContainer{
-    float: left;
-    font-size: 50px !important;
+.featuredIconContainer {
+  float: left;
+  font-size: 50px !important;
 }
-.message{
-    float: right;
+.message {
+  float: right;
 }
-.featuredTitle{
-    font-family: MontserrarRegular;
-    font-size: 24px;
+.featuredTitle {
+  font-family: MontserrarRegular;
+  font-size: 24px;
 }
-.featuredMessage{
-    font-family: MontserrarRegular;
-    font-size: 20px;
+.featuredMessage {
+  font-family: MontserrarRegular;
+  font-size: 20px;
+}
+
+.featuredInfo {
+  height: 100%;
+  overflow-x: visible;
+  width: 100%;
 }

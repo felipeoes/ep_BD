@@ -1,5 +1,17 @@
-.dashboard{
-    flex:3;
-    margin-top: 16px;
+.dashboard {
+  flex: 3;
+  margin-top: 16px;
+  height: 100%;
 }
-html, body { height: 100%; overflow: hidden }
+html,
+body {
+  height: 100%;
+  overflow: auto;
+}
+
+.my-scroll-style {
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: scroll;
+}
