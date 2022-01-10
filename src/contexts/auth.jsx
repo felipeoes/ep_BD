@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import api from "../services/api";
+import { API_AUTH_BASEURL } from "../services/api";
 
 const AuthContext = createContext({});
 
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   async function Login(userData) {
     const data = JSON.stringify(userData);
 
-    fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/login/", {
+    fetch(`${API_AUTH_BASEURL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   async function Register(userData) {
     const data = JSON.stringify(userData);
 
-    fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/register/", {
+    fetch(`${API_AUTH_BASEURL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
   async function Logout() {
     if (localStorage.getItem("token") !== null) {
-      fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/logout/", {
+      fetch(`${API_AUTH_BASEURL}/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,6 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    // <AuthContext.Provider value={{ signed: Boolean(user), user, Login }}>
     <AuthContext.Provider
       value={{
         signed: Boolean(localStorage.getItem("token") !== null),

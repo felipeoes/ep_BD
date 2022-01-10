@@ -19,6 +19,7 @@ export default function Dashboard() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   return (
     <div className="dashboard">
       {data.length ? (

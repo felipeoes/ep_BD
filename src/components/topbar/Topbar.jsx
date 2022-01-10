@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import "./Topbar.css";
 import { Notifications, Search } from "@mui/icons-material/";
-import userIcon from "../../images/userIcon.png";
+import { API_AUTH_BASEURL, FRONT_BASEURL } from "../../services/api";
 import AuthContext from "../../contexts/auth";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
 import { UserIcon } from "./styles";
@@ -21,9 +21,9 @@ export const Topbar = (props, ref) => {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
-      window.location.replace("https://frontbd.vercel.app/login");
+      window.location.replace(`${FRONT_BASEURL}/login`);
     } else {
-      fetch("https://frontbd.vercel.app/api/v1/usuarios/auth/user/", {
+      fetch(`${API_AUTH_BASEURL}/user`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
