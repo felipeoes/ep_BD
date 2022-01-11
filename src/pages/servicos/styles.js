@@ -70,6 +70,28 @@ export const ServiceLabelsContainer = styled.div`
   margin-bottom: 26px;
 `;
 
+export const AddProductButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  background: #3751ff;
+  width: 136px;
+  height: 38px;
+  font-family: MontserratRegular;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  -webkit-border-radius: 4px;
+  border: 0 none;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0px 5px 18px rgba(40, 41, 61, 0.07);
+  border-radius: 4px;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
+
 export const SecondLabelsContainer = styled.div`
   display: flex;
   width: 520px;

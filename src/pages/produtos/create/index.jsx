@@ -46,7 +46,7 @@ function CreateProduto(props) {
         console.log(error);
       }
     },
-    [nome, categoria, preco, codBarras]
+    [nome, categoria, preco, codBarras, props]
   );
 
   return (

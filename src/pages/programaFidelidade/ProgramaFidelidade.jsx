@@ -28,6 +28,7 @@ import TextField from "@mui/material/TextField";
 import ServicesModal from "../../components/modal/Modal";
 import PaginatedItems from "../../components/paginate/Paginate";
 import Loading from "../../components/loading/Loading";
+import CreateProgramaFidelidade from './create';
 
 export default function Produtos() {
     const [programs, setProgramas] = useState([]);
@@ -160,6 +161,8 @@ export default function Produtos() {
                         <h2>Programas de Benefícios FarmaUSP</h2>
                     </AutocompleteContainer>
                     <ServicesModal
+                        headerTitle="Cadastrar Programa de Fidelidade"
+                        ModalContent={CreateProgramaFidelidade}
                         setModalFunction={(f) => {
                             setChildModalFunction(f);
                         }}

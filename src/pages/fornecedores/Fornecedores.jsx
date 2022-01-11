@@ -28,6 +28,7 @@ import TextField from "@mui/material/TextField";
 import ServicesModal from "../../components/modal/Modal";
 import PaginatedItems from "../../components/paginate/Paginate";
 import Loading from "../../components/loading/Loading";
+import CreateFornecedor from "./create";
 
 export default function Produtos() {
   const [fornecedores, setFornecedores] = useState([]);
@@ -169,6 +170,8 @@ export default function Produtos() {
             <h2>Fornecedores</h2>
           </AutocompleteContainer>
           <ServicesModal
+            headerTitle="Cadastrar Fornecedor"
+            ModalContent={CreateFornecedor}
             setModalFunction={(f) => {
               setChildModalFunction(f);
             }}

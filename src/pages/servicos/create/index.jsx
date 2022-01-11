@@ -2,76 +2,118 @@
 import React, { useCallback, useState } from "react";
 import "../servicos.css";
 
-import api from '../../../services/api';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import api from "../../../services/api";
 
-import { Container } from "./styles";
+import {
+  CreateProductContainer,
+  CreateProductFormLabel,
+  CreateProductFormInput,
+  CreateProductButtonsContainer,
+  SaveButton,
+  CancelButton,
+} from "./styles";
+import { FormContainer, FormInput, FormLabel } from "../../auth/login/styles";
+import { NameInputContainer } from "../../auth/signup/styles";
 
-function CreateServico() {
-
-  const [id, setId] = useState(Math.floor(Math.random() * 99999) + 1);
+function CreateServico(props) {
+  const [id, setId] = useState(Math.floor(Math.random() * 999) + 1);
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [preco, setPreco] = useState("");
 
-  let navigate = useNavigate();
+  const handleCreateServico = useCallback(
+    async (event) => {
+      props.handleOnClose();
+      event.preventDefault();
 
-  const handleCreateServico = useCallback(async (event) => {
-    event.preventDefault();
-    try {
+      let response;
+      try {
 
-      const obg = {
-        id, nome, descricao, preco,
+        const obg = {
+          id, nome, descricao, preco,
+        }
+        console.log(obg);
+
+        api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+        response = await api.post(`servicos/`, obg);
+
+        console.log(response);
+        toast.success("Serviço cadastrado com sucesso!");
+
+      } catch (error) {
+        toast.error("Não foi possível cadastrar o serviço! Verifique os campos preenchidos.");
+        console.log("erro");
+        console.log(error);
       }
-      console.log(obg);
-
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.post(`servicos/`, obg);
-
-      console.log(response);
-      toast.success("Serviço cadastrado com sucesso!");
-      navigate(`/servicos`);
-
-    } catch (error) {
-      toast.error("Erro no casdastro do serviço!");
-      console.log('erro');
-      console.log(error);
-    }
-
-  }, [nome, descricao, preco, navigate, id]);
+    },
+    [nome, descricao, preco, id, props]
+  );
 
   return (
-    <div className="servicos">
-      <Container onSubmit={handleCreateServico}>
-        <h2>Cadastrar Serviço</h2>
+    <CreateProductContainer>
+      <FormContainer
+        onSubmit={() => handleCreateServico}
+        style={{ marginTop: 0, width: "100%" }}
+      >
+        <NameInputContainer>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <CreateProductFormLabel htmlFor="lastName">
+              Nome do Serviço
+            </CreateProductFormLabel>
+            <br />
+            <CreateProductFormInput
+              type="text"
+              placeholder="Digite o nome do serviço"
+              value={nome}
+              onChange={(event) => setNome(event.target.value)}
+              required
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginRight: 12,
+            }}
+          >
+            <CreateProductFormLabel htmlFor="firstName">
+              Preço
+            </CreateProductFormLabel>
+            <br />
+            <CreateProductFormInput
+              type="number"
+              placeholder="Digite o preço"
+              value={preco}
+              onChange={(event) => setPreco(event.target.value)}
+              required
+            />
+          </div>
+        </NameInputContainer>
 
-        <input
-          type="text"
-          placeholder="Nome Serviço"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-          required
-          max={10}
-        />
-        <input
-          type="text"
-          placeholder="Descricao"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          required
-        />
-        <input
-          type="number"
-          min={1}
-          placeholder="Preço"
-          value={preco}
-          onChange={(event) => setPreco(event.target.value)}
-          required
-        />
-        <button type="submit">Cadastrar</button>
-      </Container>
-    </div>
+        <NameInputContainer>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <CreateProductFormLabel htmlFor="lastName">
+              Descrição
+            </CreateProductFormLabel>
+            <br />
+            <CreateProductFormInput
+              type="text"
+              placeholder="Digite a descrição do serviço"
+              value={descricao}
+              onChange={(event) => setDescricao(event.target.value)}
+              required
+            />
+          </div>          
+        </NameInputContainer>
+        <CreateProductButtonsContainer>
+          <CancelButton onClick={props.handleOnClose}>Cancelar</CancelButton>
+          <SaveButton type="submit" onClick={handleCreateServico}>
+            Salvar
+          </SaveButton>
+        </CreateProductButtonsContainer>
+      </FormContainer>
+    </CreateProductContainer>
   );
 }
 

@@ -3,6 +3,7 @@ import { AddCircle, Edit } from "@mui/icons-material/";
 import "./clientes.css";
 
 import AutoScrollContainer from "auto-scroll-container";
+import ServicesModal from "../../components/modal/Modal";
 
 import api from "../../services/api";
 import { toast } from "react-toastify";
@@ -19,18 +20,21 @@ import {
     ClientCommonInfo,
     ClientEditContainer,
     SecondLabelsContainer,
+    AddProductButton
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 
 import PaginatedItems from "../../components/paginate/Paginate";
 import Loading from "../../components/loading/Loading";
+import CreateCliente from "./create";
 
 export default function Clientes() {
     const [clients, setClients] = useState([]);
     const [filteredClients, setFilteredClients] = useState([]);
     const [selectedClient, setSelectedClient] = useState(null);
     const [filteredClientsNames, setFilteredClientsNames] = useState([]);
+    const [childModalFunction, setChildModalFunction] = useState(null);
 
     useEffect(() => {
         async function loadClients() {
@@ -150,11 +154,24 @@ export default function Clientes() {
                         />
                         <h2> Clientes FarmaUSP </h2>
                     </AutocompleteContainer>
+                    <ServicesModal
+                        headerTitle="Cadastrar Cliente"
+                        ModalContent={CreateCliente}
+                        setModalFunction={(f) => {
+                            setChildModalFunction(f);
+                        }}
+                    />
                     <ButtonsContainer>
-                        <AddClientButton>
-                            Cadastrar cliente
+                        {/* <Link to="/create-prod"> */}
+                        <AddProductButton
+                            onClick={() => {
+                                childModalFunction();
+                            }}
+                        >
+                            Cadastrar Cliente
                             <AddCircle color="white" />
-                        </AddClientButton>
+                        </AddProductButton>
+                        {/* </Link> */}
                     </ButtonsContainer>
 
                     <ClientLabelsContainer>

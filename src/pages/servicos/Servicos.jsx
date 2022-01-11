@@ -18,18 +18,21 @@ import {
     ServiceCommonInfo,
     ServiceEditContainer,
     SecondLabelsContainer,
+    AddProductButton
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import ServicesModal from "../../components/modal/Modal";
 import PaginatedItems from "../../components/paginate/Paginate";
 import Loading from "../../components/loading/Loading";
+import CreateServico from "./create";
 
 export default function Servicos() {
     const [services, setServices] = useState([]);
     const [filteredServices, setFilteredServices] = useState([]);
     const [selectedService, setSelectedService] = useState([]);
     const [filteredServicesNames, setFilteredServicesNames] = useState([]);
+    const [childModalFunction, setChildModalFunction] = useState(null);
 
     useEffect(() => {
         async function loadServices() {
@@ -149,11 +152,24 @@ export default function Servicos() {
                         />
                         <h2> Serviços FarmaUSP </h2>
                     </AutocompleteContainer>
+                    <ServicesModal
+                        headerTitle="Cadastrar produto"
+                        ModalContent={CreateServico}
+                        setModalFunction={(f) => {
+                            setChildModalFunction(f);
+                        }}
+                    />
                     <ButtonsContainer>
-                        <AddServiceButton>
-                            Cadastrar serviço
+                        {/* <Link to="/create-prod"> */}
+                        <AddProductButton
+                            onClick={() => {
+                                childModalFunction();
+                            }}
+                        >
+                            Cadastrar Serviço
                             <AddCircle color="white" />
-                        </AddServiceButton>
+                        </AddProductButton>
+                        {/* </Link> */}
                     </ButtonsContainer>
 
                     <ServiceLabelsContainer>

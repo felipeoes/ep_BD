@@ -19,18 +19,23 @@ import {
   EmployeeCommonInfo,
   EmployeeEditContainer,
   SecondLabelsContainer,
+  AddProductButton
 } from "./styles.js";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import ServicesModal from "../../components/modal/Modal";
 import PaginatedItems from "../../components/paginate/Paginate";
 import Loading from "../../components/loading/Loading";
+import CreateFuncionario from "./create";
+import CreateTurno from "./turno";
 
 export default function Funcionarios() {
   const [employees, setEmployees] = useState([]);
   const [filteredEmployees, setFilteredEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [filteredEmployeesNames, setFilteredEmployeesNames] = useState([]);
+  const [childModalFunction, setChildModalFunction] = useState(null);
+  const [childModalFunctionTurno, setChildModalFunctionTurno] = useState(null);
 
   useEffect(() => {
     async function loadEmployees() {
@@ -153,11 +158,43 @@ export default function Funcionarios() {
             />
             <h2> Funcionários FarmaUSP </h2>
           </AutocompleteContainer>
+          <ServicesModal
+            headerTitle="Cadastrar produto"
+            ModalContent={CreateFuncionario}
+            setModalFunction={(f) => {
+              setChildModalFunction(f);
+            }}
+          />
+          <ServicesModal
+            headerTitle="Cadastrar Turno"
+            ModalContent={CreateTurno}
+            setModalFunction={(f) => {
+              setChildModalFunctionTurno(f);
+            }}
+          />
           <ButtonsContainer>
-            <AddEmployeeButton>
-              Cadastrar funcionário
+            {/* <Link to="/create-prod"> */}
+            <AddProductButton
+              onClick={() => {
+                childModalFunction();
+              }}
+            >
+              Cadastrar Funcionário
               <AddCircle color="white" />
-            </AddEmployeeButton>
+            </AddProductButton>
+            {/* </Link> */}
+          </ButtonsContainer>
+          <ButtonsContainer>
+            {/* <Link to="/create-prod"> */}
+            <AddProductButton
+              onClick={() => {
+                childModalFunctionTurno();
+              }}
+            >
+              Cadastrar Turno
+              <AddCircle color="white" />
+            </AddProductButton>
+            {/* </Link> */}
           </ButtonsContainer>
 
           <EmployeeLabelsContainer>

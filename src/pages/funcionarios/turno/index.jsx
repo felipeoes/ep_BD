@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useCallback, useState } from "react";
-import "../clientes.css";
+import React, { useCallback, useState, useEffect } from "react";
+import "../funcionarios.css";
 
 import { toast } from "react-toastify";
 import api from "../../../services/api";
+import Autocomplete from "@mui/material/Autocomplete";
 
 import {
   CreateProductContainer,
@@ -22,60 +23,60 @@ import es from 'date-fns/locale/pt-BR';
 import { FormContainer, FormInput, FormLabel } from "../../auth/login/styles";
 import { NameInputContainer } from "../../auth/signup/styles";
 
-function CreateCliente(props) {
-  const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [address, setAddress] = useState("");
-  const [gender, setGender] = useState("M");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+
+function CreateTurno(props) {
+
+  const [descricao, setDescricao] = useState("");
+  const [dataEntrada, setDataEntrada] = useState(setHours(setMinutes(new Date(), 30), 16));
+  const [dataSaida, setDataSaida] = useState(setHours(setMinutes(new Date(), 30), 16));
+  const [funcional, setFuncional] = useState("");
+
   registerLocale('es', es);
 
-  const handleCreateNewCliente = useCallback(async (event) => {
+  const handleCreateNewTurno = useCallback(async (event) => {
     event.preventDefault();
     props.handleOnClose();
     try {
       const obg = {
-        nome: name,
-        cpf,
-        data_nascimento: (birthDate.getFullYear() + "-" + ((birthDate.getMonth() + 1)) + "-" + (birthDate.getDate())),
-        sexo: gender,
-        email,
-        id_beneficios: 1,
+        funcional,
+        data_hora_entrada: (dataEntrada.getFullYear() + "-" + ((dataEntrada.getMonth() + 1)) + "-" + (dataEntrada.getDate())),
+        data_hora_saida: (dataSaida.getFullYear() + "-" + ((dataSaida.getMonth() + 1)) + "-" + (dataSaida.getDate())),
+        descricao,
       }
       console.log(obg);
 
       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.post(`clientes/`, obg);
+      const response = await api.post(`turnos/`, obg);
 
       console.log(response);
-      toast.success("Cliente cadastrado com sucesso!");
+      toast.success("Turno cadastrado com sucesso!");
 
     } catch (error) {
-      toast.error("Erro no casdastro do cliente! Verificar os campos preenchidos");
+      toast.error("Erro no casdastro do turno! Verificar os campos preenchidos");
       console.log('erro');
       console.log(error);
     }
-  }, [cpf, birthDate, name, gender, email, props]);
+  }, [props, dataEntrada, dataSaida, descricao, funcional]);
 
   return (
     <CreateProductContainer>
       <FormContainer
-        onSubmit={() => handleCreateNewCliente}
+        onSubmit={() => handleCreateNewTurno}
         style={{ marginTop: 0, width: "100%" }}
       >
         <NameInputContainer>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <CreateProductFormLabel htmlFor="lastName">
-              Nome do Cliente
+              Nome do Funcionário
             </CreateProductFormLabel>
             <br />
             <CreateProductFormInput
-              type="text"
-              placeholder="Digite o nome do cliente"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
+              type="number"
+              placeholder="Digite a funcional do funcionário de 7 dígitos"
+              value={funcional}
+              onChange={(event) => setFuncional(event.target.value)}
               required
             />
           </div>
@@ -87,16 +88,22 @@ function CreateCliente(props) {
             }}
           >
             <CreateProductFormLabel htmlFor="firstName">
-              CPF
+              Data e Hora de entrada
             </CreateProductFormLabel>
             <br />
-            <CreateProductFormInput
-              type="text"
-              placeholder="Digite o CPF de 11 dígitos"
-              value={cpf}
-              onChange={(event) => setCpf(event.target.value)}
-              required
-              max={11}
+            <DatePicker
+            locale='es'
+              className="data"
+              selected={dataEntrada}
+              onChange={(date) => setDataEntrada(date)}
+              showTimeSelect
+              includeTimes={[
+                setHours(setMinutes(new Date(), 0), 17),
+                setHours(setMinutes(new Date(), 30), 18),
+                setHours(setMinutes(new Date(), 30), 19),
+                setHours(setMinutes(new Date(), 30), 17),
+              ]}
+              dateFormat="MMMM d, yyyy HH:mm"
             />
           </div>
         </NameInputContainer>
@@ -104,15 +111,21 @@ function CreateCliente(props) {
         <NameInputContainer>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <CreateProductFormLabel htmlFor="lastName">
-              E-mail
+              Data/Hora de saída
             </CreateProductFormLabel>
             <br />
-            <CreateProductFormInput
-              type="email"
-              placeholder="Digite o e-mail do cliente"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              required
+            <DatePicker
+              className="data"
+              selected={dataSaida}
+              onChange={(date) => setDataSaida(date)}
+              showTimeSelect
+              includeTimes={[
+                setHours(setMinutes(new Date(), 0), 17),
+                setHours(setMinutes(new Date(), 30), 18),
+                setHours(setMinutes(new Date(), 30), 19),
+                setHours(setMinutes(new Date(), 30), 17),
+              ]}
+              dateFormat="MMMM d, yyyy HH:mm"
             />
           </div>
           <div
@@ -123,35 +136,21 @@ function CreateCliente(props) {
             }}
           >
             <CreateProductFormLabel htmlFor="firstName">
-              Sexo
+              Descrição
             </CreateProductFormLabel>
             <br />
-            <EmployeeTypeSelect name="sexo" style={{ marginLeft: 0 }}
-              onChange={(event) => setGender(event.target.value)}
-            >
-              <option defaultChecked value="M">Masculino</option>
-              <option value="F">Feminino</option>
-            </EmployeeTypeSelect>
-          </div>
-        </NameInputContainer>
-        <NameInputContainer>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <CreateProductFormLabel htmlFor="lastName">
-              Data Nascimento
-            </CreateProductFormLabel>
-            <br />
-            <DatePicker
-              className="data"
-              locale='es'
-              selected={birthDate}
-              onChange={(date) => setBirthDate(date)}
-              dateFormat="dd/MM/yyyy"
-              placeholderText="Data de Nascimento" />
+            <CreateProductFormInput
+              type="text"
+              placeholder="Digite a descrição das atividades"
+              value={descricao}
+              onChange={(event) => setDescricao(event.target.value)}
+              required
+            />
           </div>
         </NameInputContainer>
         <CreateProductButtonsContainer>
           <CancelButton onClick={props.handleOnClose}>Cancelar</CancelButton>
-          <SaveButton type="submit" onClick={handleCreateNewCliente}>
+          <SaveButton type="submit" onClick={handleCreateNewTurno}>
             Salvar
           </SaveButton>
         </CreateProductButtonsContainer>
@@ -160,7 +159,7 @@ function CreateCliente(props) {
   );
 }
 
-export default CreateCliente;
+export default CreateTurno;
 
 // /* eslint-disable jsx-a11y/label-has-associated-control */
 // import React, { useCallback, useState } from "react";
