@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Loading from "../loading/Loading";
 import { PaginateContainer } from "./styles";
+import "./paginate.css";
 
 export default function PaginatedItems({
   itemsPerPage,
@@ -29,6 +30,7 @@ export default function PaginatedItems({
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
+
     setItemOffset(newOffset);
   };
 

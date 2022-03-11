@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../../../services/api";
 
 // import { useNavigate } from 'react-router-dom';
@@ -30,7 +30,6 @@ function ListCompras() {
       url = "compras/";
     async function loadPurchases() {
       try {
-        api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
         const response = await api.get(url);
 
         r.push(response);
@@ -50,7 +49,7 @@ function ListCompras() {
   }, []);
 
   const purchases = [];
-  const medias = [];
+  
   if (responses.length) {
     responses.map((item) => {
       item.data.results.forEach((arr) => {

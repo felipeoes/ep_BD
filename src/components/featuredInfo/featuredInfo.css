@@ -1,8 +1,8 @@
 .featured {
   width: 100%;
   display: flex;
-  justify-content: center;
-  margin-top: -250px;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 .featuredItem {
   flex: 1;
@@ -16,8 +16,6 @@
   background-color: white;
   max-height: 300px;
   max-width: 320px;
-  /* -webkit-box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); 
-    box-shadow: 1px 0px 1px 0px rgba(0,0,0,0.32); */
 }
 
 .featuredItem:hover {

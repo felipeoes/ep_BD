@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import { API_AUTH_BASEURL, FRONT_BASEURL } from "../services/api";
+import React, { useEffect, createContext, useState } from "react";
+import { FRONT_BASEURL, apiAuth } from "../services/api";
 
 const AuthContext = createContext({});
 
@@ -12,70 +12,76 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(userObj);
 
   async function Login(userData) {
-    const data = JSON.stringify(userData);
+    const data = userData;
 
-    fetch(`${API_AUTH_BASEURL}/login/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.key) {
+    let errors = { name: "", message: "" };
+
+    const response = await apiAuth
+      .post(`/login/`, data)
+      .then((res) => {
+        if (res.data.key) {
           localStorage.clear();
-          localStorage.setItem("token", data.key);
-          window.location.replace(`${FRONT_BASEURL}/dashboard`);
-          return true;
-        } else {
-          setUser(null);
-          localStorage.clear();
+          localStorage.setItem("token", res.data.key);
+          return res;
         }
+      })
+      .catch((error) => {
+        console.log(error.response);
+        errors = error.response.data;
+        console.log(errors);
+
+        setUser(null);
+        localStorage.clear();
+        return errors;
       });
 
-    return false;
+    return response;
   }
 
   async function Register(userData) {
-    const data = JSON.stringify(userData);
+    const data = userData;
+    const response = await apiAuth.post(`/register/`, data);
 
-    fetch(`${API_AUTH_BASEURL}/register/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.key) {
-          localStorage.clear();
-          localStorage.setItem("token", data.key);
-          window.location.replace(`${FRONT_BASEURL}/dashboard`);
-        } else {
-          setUser(null);
-          localStorage.clear();
-        }
-        return data;
-      });
+    if (response.data.key) {
+      localStorage.clear();
+      localStorage.setItem("token", response.data.key);
+      window.location.replace(`${FRONT_BASEURL}/dashboard`);
+    } else {
+      setUser(null);
+      localStorage.clear();
+    }
   }
 
   async function Logout() {
-    if (localStorage.getItem("token") !== null) {
-      fetch(`${API_AUTH_BASEURL}/logout/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          localStorage.clear();
-          window.location.replace(`${FRONT_BASEURL}/login`);
-        });
+    const data = { key: localStorage.getItem("token") };
+    const response = await apiAuth.post(`/logout/`, data);
+
+    if (response.status === 200) {
+      localStorage.clear();
+      setUser(null);
+    }
+
+    window.location.replace(`${FRONT_BASEURL}/login`);
+  }
+
+  async function GetUser() {
+    // função chamada apenas uma vez para setar o user no contexto global da aplicação
+    if (localStorage.getItem("token") === null) {
+      window.location.replace(`${FRONT_BASEURL}/login`);
+    } else {
+      apiAuth.defaults.headers.Authorization = `Token ${localStorage.getItem(
+        "token"
+      )}`;
+      const response = await apiAuth.get(`/user/`);
+      const user = response.data;
+
+      console.log("entrei na funcao getUser");
+
+      console.log(user);
+      // setUser(user);
+
+      apiAuth.defaults.headers.Authorization = null;
+      return user;
     }
   }
 
@@ -87,6 +93,7 @@ export const AuthProvider = ({ children }) => {
         Login,
         Register,
         Logout,
+        GetUser,
       }}
     >
       {children}

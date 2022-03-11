@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  
+
   overflow: auto;
   align-items: center;
 
@@ -20,26 +20,29 @@ export const Container = styled.div`
   scrollbar-width: none;
 `;
 
+export const ContentContainer = styled.div`
+  width: 85%;
+`;
+
 export const AutocompleteContainer = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   margin-top: 1rem;
-  margin-left: 1rem;
+  justify-content: space-between;
 `;
 
 export const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
 `;
 
 export const AddProductButton = styled.button`
   display: flex;
   flex-direction: row;
   background: #3751ff;
-  width: 136px;
+  width: 166px;
   height: 38px;
   font-family: MontserratRegular;
   font-size: 12px;
@@ -53,8 +56,6 @@ export const AddProductButton = styled.button`
 
   box-shadow: 0px 5px 18px rgba(40, 41, 61, 0.07);
   border-radius: 4px;
-  margin-top: 1rem;
-  margin-left: 1rem;
 `;
 
 export const ProductLabelsContainer = styled.div`
@@ -62,10 +63,18 @@ export const ProductLabelsContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: 20px;
-  width: 1078px;
+  width: 85%;
   align-items: center;
   margin-top: 2rem;
   margin-bottom: 26px;
+  
+`;
+export const ProductMainLabelContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 250px;
+  margin-left: 2.5rem;
 `;
 
 export const SecondLabelsContainer = styled.div`
@@ -82,17 +91,18 @@ export const ProductLabel = styled.label`
   font-size: 13px;
 
   color: #82868c;
-  margin-left: 60px;
+
   padding-left: 10px;
 `;
 
+export const ProductCardContainer = styled.div``;
 export const ProductCard = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   height: 85px;
-  width: 1121px;
+  width: 100%;
 
   background: #ffffff;
 
@@ -144,6 +154,7 @@ export const CardContainer = styled.div`
 
   align-items: center;
   justify-content: space-evenly;
+  border: 2px red solid;
 `;
 
 export const ProductCategoryContainer = styled.div`

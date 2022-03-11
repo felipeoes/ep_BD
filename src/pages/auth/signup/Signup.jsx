@@ -21,6 +21,7 @@ import {
 import Loading from "../../../components/loading/Loading.jsx";
 import { toast } from "react-toastify";
 import { NameInputContainer } from "./styles";
+import { FRONT_BASEURL } from "../../../services/api.js";
 
 export default function Signup() {
   const [firstName, setFirstName] = useState("");
@@ -37,7 +38,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
-      window.location.replace("https://frontbd.vercel.app/dashboard");
+      window.location.replace(`${FRONT_BASEURL}/dashboard`);
     } else {
       setLoading(false);
     }
@@ -50,7 +51,7 @@ export default function Signup() {
       last_name: lastName,
       funcional: functional,
       email: email,
-      password1: password1,
+      password: password1,
       password2: password2,
     };
 

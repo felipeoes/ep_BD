@@ -55,6 +55,9 @@ const ServicesModal = forwardRef((props, ref) => {
   const handleClose = () => setOpen(false);
 
   var ModalContent = props.ModalContent;
+  var item = props.item ? props.item : null;
+  const jumpPage = props.jumpPage ? props.jumpPage : null;
+  const updateItem = props.updateItem ? props.updateItem : null;
 
   useImperativeHandle(ref, () => ({
     handleOpen() {
@@ -94,7 +97,13 @@ const ServicesModal = forwardRef((props, ref) => {
             </ModalHeaderTabContainer>
           </ModalHeader>
           <ModalContentContainer>
-            <ModalContent handleOnClose={handleClose} />
+            <ModalContent
+              handleOnClose={handleClose}
+              loadItems={props.loadItems}
+              item={item}
+              jumpPage={jumpPage}
+              updateItem={updateItem}
+            />
           </ModalContentContainer>
         </ModalContainer>
       </StyledModal>

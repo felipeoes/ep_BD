@@ -20,18 +20,19 @@ import "./Login.css";
 import AuthContext from "../../../contexts/auth";
 import Loading from "../../../components/loading/Loading.jsx";
 import { toast } from "react-toastify";
+import { FRONT_BASEURL } from "../../../services/api.js";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
+export default function Login({ updateUser }) {
+  const [functional, setFunctional] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
-
   const context = useContext(AuthContext);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
-      window.location.replace("https://frontbd.vercel.app/dashboard");
+      window.location.replace(`${FRONT_BASEURL}/dashboard`);
     } else {
       setLoading(false);
     }
@@ -40,21 +41,23 @@ export default function Login() {
   const onSubmit = async (e) => {
     e.preventDefault();
     const user = {
-      email: email,
+      funcional: functional,
       password: password,
     };
 
     const response = await context.Login(user);
 
     setTimeout(() => {
-      if (response) {
-        context.user = user;
+      console.log(response);
+      if (response && response.status === 200) {
+        window.location.replace(`${FRONT_BASEURL}/dashboard`);
       } else {
-        setEmail("");
+        setFunctional("");
         setPassword("");
         localStorage.clear();
         setErrors(true);
-        toast.error("Não foi possível fazer login, verifique seus dados");
+        toast.error(response);
+        setErrorMessage(JSON.stringify(response));
       }
     }, 2000);
 
@@ -66,9 +69,7 @@ export default function Login() {
   function handleOnSubmit(e) {
     setLoading(true);
 
-    setTimeout(() => {
-      onSubmit(e);
-    }, 4000);
+    onSubmit(e);
   }
 
   return (
@@ -92,8 +93,8 @@ export default function Login() {
               type="spin"
               color="#2940D3"
               active={loading}
-              width={100}
-              height={100}
+              width={70}
+              height={70}
             />
           </LoginContainer>
         </div>
@@ -111,16 +112,29 @@ export default function Login() {
           )}
 
           <div>
+            {errors && (
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "red",
+                  fontFamily: "MontserratRegular",
+                  fontSize: 14,
+                  height: 15,
+                }}
+              >
+                {errorMessage}
+              </p>
+            )}
             <form onSubmit={handleOnSubmit}>
               <FormContainer>
-                <FormLabel htmlFor="email">EMAIL</FormLabel>
+                <FormLabel htmlFor="email">FUNCIONAL</FormLabel>
                 <br />
                 <FormInput
-                  name="email"
-                  type="email"
-                  value={email}
+                  name="functional"
+                  type="text"
+                  value={functional}
                   required
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => setFunctional(e.target.value)}
                 />{" "}
                 <br />
                 <FormLabel htmlFor="password">SENHA</FormLabel>

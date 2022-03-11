@@ -5,6 +5,7 @@ export const PaginateContainer = styled.div`
   align-items: center;
   width: 100%;
   justify-content: center;
+  
 
   ul {
     display: flex;

@@ -11,11 +11,12 @@ import {
 } from "@mui/icons-material/";
 import logo from "../../assets/images/logoUSP.svg";
 
-import { Link } from "react-router-dom";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+
 import { useState } from "react";
 
 const salesPages = [
-  ["Dashboard", "/"],
+  ["Dashboard", "/dashboard"],
   ["Serviços", "/servicos-vendas"],
   ["Vender", "/vender"],
 ];
@@ -25,75 +26,83 @@ const manegementPages = [
   ["Funcionários", "/funcionarios"],
   ["Produtos", "/produtos"],
   ["Gerenciar serviços", "/servicos"],
-  ["Programa de fidelidade", "/fidelidade"],
+  ["Fidelidade", "/fidelidade"],
   ["Fornecedores", "/fornecedores"],
   ["Solicitações", "/solicitarProduto"],
 ];
 
 export default function Sidebar({ updatePage }) {
-  const [clickedPage, setClickedPage] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  function clickHandler(index) {
-    console.log(index);
-    setClickedPage(index);
+  function toggleSidebar() {
+    setIsSidebarOpen(!isSidebarOpen);
+    console.log("entered");
   }
 
-  const SidebarItem = ({ Icon, path, itemName, clicked, onClick }) => (
-    <Link to={path} onClick={onClick}>
-      <li className={`sidebarListItem ${clicked ? "active" : ""}`}>
-        {itemName === "Dashboard" ? (
-          <Dashboard className="sidebarIcon" />
-        ) : itemName === "Serviços" ? (
-          <MedicalServices className="sidebarIcon" />
-        ) : itemName === "Vender" ? (
-          <LocalGroceryStore className="sidebarIcon" />
-        ) : itemName === "Clientes" ? (
-          <PersonAddAlt1 className="sidebarIcon" />
-        ) : itemName === "Funcionários" ? (
-          <Person className="sidebarIcon" />
-        ) : itemName === "Produtos" ? (
-          <Medication className="sidebarIcon" />
-        ) : itemName === "Gerenciar serviços" ? (
-          <MedicalServices className="sidebarIcon" />
-        ) : itemName === "Programa de fidelidade" ? (
-          <Loyalty className="sidebarIcon" />
-        ) : itemName === "Fornecedores" ? (
-          <LocalShipping className="sidebarIcon" />
-        ) : itemName === "Solicitações" ? (
-          <Medication className="sidebarIcon" />
-        ) : (
-          ""
-        )}{" "}
-        {itemName}
-      </li>
-    </Link>
-  );
+  const SidebarItem = ({ path, itemName, onClick }) => {
+    let resolved = useResolvedPath(path);
+    let match = useMatch({ path: resolved.pathname, end: true });
+
+    return (
+      <Link to={path} onClick={onClick}>
+        <li className={`sidebarListItem ${match ? "active" : ""}`}>
+          {itemName === "Dashboard" ? (
+            <Dashboard className="sidebarIcon" />
+          ) : itemName === "Serviços" ? (
+            <MedicalServices className="sidebarIcon" />
+          ) : itemName === "Vender" ? (
+            <LocalGroceryStore className="sidebarIcon" />
+          ) : itemName === "Clientes" ? (
+            <PersonAddAlt1 className="sidebarIcon" style={{ marginLeft: 3 }} />
+          ) : itemName === "Funcionários" ? (
+            <Person className="sidebarIcon" />
+          ) : itemName === "Produtos" ? (
+            <Medication className="sidebarIcon" />
+          ) : itemName === "Gerenciar serviços" ? (
+            <MedicalServices className="sidebarIcon" />
+          ) : itemName === "Fidelidade" ? (
+            <Loyalty className="sidebarIcon" />
+          ) : itemName === "Fornecedores" ? (
+            <LocalShipping className="sidebarIcon" />
+          ) : itemName === "Solicitações" ? (
+            <Medication className="sidebarIcon" />
+          ) : (
+            ""
+          )}{" "}
+          {itemName}
+        </li>
+      </Link>
+    );
+  };
 
   return (
-    <div className="sidebar">
+    <div
+      className="sidebar"
+      onMouseEnter={toggleSidebar}
+      onMouseLeave={toggleSidebar}
+    >
       <div className="sidebarWrapper">
         <div className="topLeft">
           <img alt="logo" className="logoImg" src={logo} />
-          <span className="logoTitle">FarmaUSP</span>
+          {isSidebarOpen && <span className="logoTitle">FarmaUSP</span>}
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Vendas</h3>
+          {isSidebarOpen && <h3 className="sidebarTitle">Vendas</h3>}
+
           <ul className="sidebarList">
             {salesPages.map((i) => (
               <SidebarItem
                 key={i}
                 path={i[1]}
                 itemName={i[0]}
-                clicked={i[0] === clickedPage}
                 onClick={() => {
-                  clickHandler(i[0]);
                   updatePage(i[0]);
                 }}
               />
             ))}
           </ul>
 
-          <h3 className="sidebarTitle">Gerenciar</h3>
+          {isSidebarOpen && <h3 className="sidebarTitle">Gerenciar</h3>}
 
           <ul className="sidebarList">
             {manegementPages.map((i) => (
@@ -101,9 +110,7 @@ export default function Sidebar({ updatePage }) {
                 key={i}
                 path={i[1]}
                 itemName={i[0]}
-                clicked={i[0] === clickedPage}
                 onClick={() => {
-                  clickHandler(i[0]);
                   updatePage(i[0]);
                 }}
               />

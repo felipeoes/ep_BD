@@ -28,12 +28,14 @@ function CreateProgramaFidelidade(props) {
       event.preventDefault();
 
       const obg = {
-        id, nome, descricao, fator_desconto: fatorDesconto,
-      }
+        id,
+        nome,
+        descricao,
+        fator_desconto: fatorDesconto,
+      };
       console.log(obg);
 
       try {
-        api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
         const response = await api.post(`programa-beneficios/`, obg);
 
         console.log(response);
@@ -52,7 +54,7 @@ function CreateProgramaFidelidade(props) {
         onSubmit={() => handleCreateProgramaBeneficio}
         style={{ marginTop: 0, width: "100%" }}
       >
-        <NameInputContainer>         
+        <NameInputContainer>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <CreateProductFormLabel htmlFor="lastName">
               Nome do programa
@@ -115,7 +117,6 @@ function CreateProgramaFidelidade(props) {
 
 export default CreateProgramaFidelidade;
 
-
 // /* eslint-disable jsx-a11y/label-has-associated-control */
 // import React, { useCallback, useState } from "react";
 // import "../programaFidelidade.css";
@@ -143,7 +144,7 @@ export default CreateProgramaFidelidade;
 //       }
 //       console.log(obg);
 
-//       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+//
 //       const response = await api.post(`programa-beneficios/`, obg);
 
 //       console.log(response);

@@ -43,7 +43,6 @@ export default function Produtos() {
     useEffect(() => {
         async function loadProducts() {
             try {
-                api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
                 const response = await api.get(`programa-beneficios/`);
 
                 console.log(response);
@@ -51,7 +50,6 @@ export default function Produtos() {
                 setProgramas([...programs]);
                 setFilteredPrograms(programs);
 
-                // populateStock(products);
                 populateData(programs);
             } catch (error) {
                 toast.error("Não foi possível pesquisar os serviços!");

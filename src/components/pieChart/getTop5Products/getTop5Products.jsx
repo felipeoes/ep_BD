@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../../services/api";
+import api, { authorization } from "../../../services/api";
 
 // import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
@@ -23,7 +23,6 @@ export default function ListTop5Products(props) {
 
   async function loadTop5Products() {
     try {
-      api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
       const response = await api.get(`top5-produtos/`);
 
       const products = response.data.results;

@@ -1,55 +1,27 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
+import React, { useRef, useContext, useEffect, useState } from "react";
 import "./Topbar.css";
 import { Notifications, Search } from "@mui/icons-material/";
-import { API_AUTH_BASEURL, FRONT_BASEURL } from "../../services/api";
-import AuthContext from "../../contexts/auth";
 import { useDetectOutsideClick } from "./useDetectOutsideClick";
-import { UserIcon } from "./styles";
-
-const userObj = {
-  first_name: "",
-  last_name: "",
-  email: "",
-};
+import { TopbarLI, TopbarUL, UserIcon, TopbarLink } from "./styles";
+import AuthContext from "../../contexts/auth";
 
 export const Topbar = (props, ref) => {
   const dropdownRef = useRef(null);
-  const [user, setUser] = useState(userObj);
   const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
-
-  const context = useContext(AuthContext);
+  const [user, setUser] = useState(null);
+  const { GetUser } = useContext(AuthContext);
 
   useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      window.location.replace(`${FRONT_BASEURL}/login`);
-    } else {
-      fetch(`${API_AUTH_BASEURL}/user`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const user = {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-          };
-
-          setUser(user);
-          context.user = user;
-        });
-    }
+    fetchUser();
   }, []);
+
+  async function fetchUser() {
+    const currentUser = await GetUser();
+    setUser(currentUser);
+  }
 
   function handleOnSelect() {
     setIsActive(!isActive);
-  }
-
-  function handleOnLogout() {
-    context.Logout();
   }
 
   return (
@@ -68,23 +40,27 @@ export const Topbar = (props, ref) => {
           </div>
           <div className="divider" />
           <div className="menu-container">
-            <button onClick={handleOnSelect} className="menu-trigger">
-              <span className="topbarUsername">
-                {user.first_name} {user.last_name}
-              </span>
-              <UserIcon src="https://avatars.githubusercontent.com/u/62308968?v=4" />
-            </button>
+            {user && (
+              <button onClick={handleOnSelect} className="menu-trigger">
+                <span className="topbarUsername">
+                  {user.first_name} {user.last_name}
+                </span>
+                <UserIcon src={user.profile_image} />
+              </button>
+            )}
+
             <nav
               ref={dropdownRef}
               className={`menu ${isActive ? "active" : "inactive"}`}
             >
-              <ul>
-                <li>
-                  <a className="menuLink" href="/logout">
-                    Sair
-                  </a>
-                </li>
-              </ul>
+              <TopbarUL>
+                <TopbarLI>
+                  <TopbarLink to="/logout">Sair</TopbarLink>
+                </TopbarLI>
+                <TopbarLI>
+                  <TopbarLink to="/user-profile/details">Gerenciar conta</TopbarLink>
+                </TopbarLI>
+              </TopbarUL>
             </nav>
           </div>
 

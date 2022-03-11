@@ -29,23 +29,24 @@ function CreateFornecedor(props) {
 
       event.preventDefault();
       const obg = {
-        razao_social: nome, cnpj, endereco: address, email
-      }
+        razao_social: nome,
+        cnpj,
+        endereco: address,
+        email,
+      };
       console.log(obg);
 
       const tel = {
-        cnpj_forn: cnpj, telefone: phoneNumber,
-      }
+        cnpj_forn: cnpj,
+        telefone: phoneNumber,
+      };
 
       try {
-
-        api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
         const response = await api.post(`fornecedores/`, obg);
 
         console.log(response);
 
         toast.success("Fornecedor cadastrado com sucesso!");
-
       } catch (error) {
         console.log("erro");
         console.log(error);
@@ -166,7 +167,6 @@ function CreateFornecedor(props) {
 
 export default CreateFornecedor;
 
-
 // /* eslint-disable jsx-a11y/label-has-associated-control */
 // import React, { useCallback, useState } from "react";
 // import "../fornecedores.css";
@@ -194,7 +194,7 @@ export default CreateFornecedor;
 //       }
 //       console.log(obg);
 
-//       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+//
 //       const response = await api.post(`fornecedores/`, obg);
 
 //       console.log(response);

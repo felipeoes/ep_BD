@@ -37,7 +37,6 @@ export default function Servicos() {
     useEffect(() => {
         async function loadServices() {
             try {
-                api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
                 const response = await api.get(`servicos/`);
 
                 console.log(response);

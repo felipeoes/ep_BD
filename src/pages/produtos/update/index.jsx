@@ -1,114 +1,144 @@
-import React, { useCallback, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import "../produtos.css";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { Container, CodBarrasContainer } from "./styles";
-import { toast } from 'react-toastify';
-import api from '../../../services/api';
+import { UpdateItemContainer } from "./styles";
+import { toast } from "react-toastify";
+import api from "../../../services/api";
+import { FormContainer } from "./../../auth/login/styles";
+import {
+  CreateProductFormInput,
+  CreateProductFormLabel,
+} from "../create/styles";
+import Loading from "./../../../components/loading/Loading";
+import {
+  CreateProductButtonsContainer,
+  CancelButton,
+} from "./../../servicos/create/styles";
+import { SaveButton } from "./../../funcionarios/create/styles";
+import { NameInputContainer } from "../../auth/signup/styles";
 
-function UpdateProduto() {
-
-  const [pesquisaCodBarras, setPesquisaCodBarras] = useState(false);
+function UpdateProduto(props) {
   const [codBarras, setCodBarras] = useState("");
   const [nome, setNome] = useState("");
   const [categoria, setCategoria] = useState("");
   const [preco, setPreco] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  let item = props.item;
+  const updateProduct = props.updateItem;
+
+  useEffect(() => {
+    setCodBarras(item.codigo_barras);
+    setNome(item.nome);
+    setCategoria(item.categoria);
+    setPreco(item.preco);
+    setLoading(false);
+  }, []);
 
   let navigate = useNavigate();
 
-  const handlePesquisarCodBarras = useCallback(async (event) => {
-    event.preventDefault();
-    try {
+  const handleOnUpdateProduct = useCallback(
+    async (event) => {
+      event.preventDefault();
+      try {
+        const obj = {
+          codigo_barras: codBarras,
+          nome,
+          categoria,
+          preco,
+        };
 
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.get(`produtos/${codBarras}`);
+        const response = await api.put(`produtos/${codBarras}/`, obj);
 
-      console.log(response);
-      const produto = response.data;
-      setNome(produto.nome);
-      setCategoria(produto.categoria);
-      setPreco(produto.preco);
-
-      setPesquisaCodBarras(true);
-    } catch (error) {
-      toast.error("Produto não encontrado");
-      console.log('erro');
-      console.log(error);
-    }
-
-  }, [codBarras]);
-
-  const handleAlterarProduto = useCallback(async (event) => {
-    event.preventDefault();
-    try {
-
-      const obg = {
-        codigo_barras: codBarras, nome, categoria, preco
+        console.log(response);
+        toast.success("Produto atualizado com sucesso!");
+        updateProduct(obj);
+        props.handleOnClose();
+      } catch (error) {
+        toast.error("Erro ao atualizar o produto");
+        console.log(error);
       }
-
-      console.log(obg);
-
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.put(`produtos/${codBarras}/`, obg);
-
-      console.log(response);
-      toast.success("Produto atualizado com sucesso!");
-      navigate(`/produtos`);
-
-    } catch (error) {
-      toast.error("Erro no update");
-      console.log('erro');
-      console.log(error);
-    }
-
-  }, [codBarras, navigate, categoria, nome, preco]);
+    },
+    [codBarras, navigate, categoria, nome, preco]
+  );
 
   return (
-    <div className="produtos">
+    <UpdateItemContainer>
+      <FormContainer onSubmit={handleOnUpdateProduct}>
+        {!loading ? (
+          <>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <CreateProductFormLabel htmlFor="productName">
+                Nome do produto
+              </CreateProductFormLabel>
+              <br />
+              <CreateProductFormInput
+                type="text"
+                placeholder="Digite o nome do produto"
+                value={nome}
+                onChange={(event) => setNome(event.target.value)}
+                required
+              />
+            </div>
 
-      <CodBarrasContainer onSubmit={handlePesquisarCodBarras}>
-        <h2 style={{ fontFamily: 'MontserratRegular'}}>Alterar Produto</h2>
-        <div>
-          <input
-            type="text"
-            placeholder="Digite o código de barras"
-            value={codBarras}
-            onChange={(event) => setCodBarras(event.target.value)}
-            required
-            max={12}
-          />
-          <button type="submit">Pesquisar</button>
-        </div>
-      </CodBarrasContainer>
+            <NameInputContainer>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <CreateProductFormLabel htmlFor="productPrice">
+                  Preço
+                </CreateProductFormLabel>
+                <br />
+                <CreateProductFormInput
+                  type="number"
+                  placeholder="Digite o preço do produto"
+                  value={preco}
+                  onChange={(event) => setPreco(event.target.value)}
+                  required
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginRight: 12,
+                }}
+              >
+                <CreateProductFormLabel htmlFor="productCategory">
+                  Categoria
+                </CreateProductFormLabel>
+                <br />
+                <CreateProductFormInput
+                  type="text"
+                  placeholder="Categoria"
+                  value={categoria}
+                  onChange={(event) => setCategoria(event.target.value)}
+                  required
+                />
+              </div>
+            </NameInputContainer>
 
-      {pesquisaCodBarras && (
-
-        <Container onSubmit={handleAlterarProduto}>
-          <input
-            type="text"
-            placeholder="Nome"
-            value={nome}
-            onChange={(event) => setNome(event.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Categoria"
-            value={categoria}
-            onChange={(event) => setCategoria(event.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Preço"
-            value={preco}
-            onChange={(event) => setPreco(event.target.value)}
-            required
-          />
-          <button type="submit">Atualizar</button>
-        </Container>
-      )}
-    </div>
+            <CreateProductButtonsContainer>
+              <CancelButton onClick={props.handleOnClose}>
+                Cancelar
+              </CancelButton>
+              <SaveButton type="submit" onClick={handleOnUpdateProduct}>
+                Atualizar
+              </SaveButton>
+            </CreateProductButtonsContainer>
+          </>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "10%",
+            }}
+          >
+            <Loading width={150} height={150} />
+          </div>
+        )}
+      </FormContainer>
+    </UpdateItemContainer>
   );
 }
 

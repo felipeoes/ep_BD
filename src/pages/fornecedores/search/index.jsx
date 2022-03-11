@@ -18,7 +18,6 @@ function ListarFornecedores() {
     async function loadFornecedores() {
       try {
 
-        api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
         const response = await api.get(`fornecedores/`);
 
         console.log(response);

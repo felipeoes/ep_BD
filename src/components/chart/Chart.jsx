@@ -9,6 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { ChartContainer, ChartWrapper } from "./styles";
 
 export default function Chart(props) {
   const array = props.compras;
@@ -22,42 +23,50 @@ export default function Chart(props) {
     today.getMinutes();
 
   return (
-    <div className="chart">
-      <h3 className="chartTitle">Valor de compras por mês</h3>
-      <p className="chartSubtitle">
-        atualizado em {dateNow}, {hours}
-      </p>
-      <ResponsiveContainer
-        width="100%"
-        aspect={4 / 1}
-        style={{ borderRadius: 5 }}
-      >
-        <LineChart
-          width={500}
-          height={300}
-          data={array}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="acumulado"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="presente" stroke="#82ca9d" />
-          <Line type="monotone" dataKey="media" stroke="#ee82ee" name="média" />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <ChartContainer>
+      <ChartWrapper>
+        <h3 className="chartTitle">Valor de compras por mês</h3>
+        <p className="chartSubtitle">
+          atualizado em {dateNow}, {hours}
+        </p>
+        <ResponsiveContainer width="100%" aspect={6 / 1}>
+          <LineChart
+            data={array}
+            style={{ paddingBottom: 20 }}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend style={{ marginTop: 15 }} />
+            <Line
+              type="monotone"
+              dataKey="acumulado"
+              stroke="#8884d8"
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="presente"
+              stroke="#82ca9d"
+              activeDot={{ r: 6 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="media"
+              stroke="#ee82ee"
+              name="média"
+              activeDot={{ r: 6 }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </ChartWrapper>
+    </ChartContainer>
   );
 }

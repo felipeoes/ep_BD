@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useCallback, useState } from "react";
-import "../produtos.css";
 
 import { toast } from "react-toastify";
 import api from "../../../services/api";
@@ -36,13 +35,13 @@ function CreateProduto(props) {
       console.log(obg);
 
       try {
-        api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
         const response = await api.post("produtos/", obg);
 
         console.log(response);
-        toast.success("Cliente cadastrado com sucesso");
+        toast.success("Produto cadastrado com sucesso");
+
+        props.loadItems();
       } catch (error) {
-        console.log("erro");
         console.log(error);
       }
     },

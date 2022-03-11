@@ -29,20 +29,22 @@ function CreateServico(props) {
 
       let response;
       try {
-
         const obg = {
-          id, nome, descricao, preco,
-        }
+          id,
+          nome,
+          descricao,
+          preco,
+        };
         console.log(obg);
 
-        api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
         response = await api.post(`servicos/`, obg);
 
         console.log(response);
         toast.success("Serviço cadastrado com sucesso!");
-
       } catch (error) {
-        toast.error("Não foi possível cadastrar o serviço! Verifique os campos preenchidos.");
+        toast.error(
+          "Não foi possível cadastrar o serviço! Verifique os campos preenchidos."
+        );
         console.log("erro");
         console.log(error);
       }
@@ -104,7 +106,7 @@ function CreateServico(props) {
               onChange={(event) => setDescricao(event.target.value)}
               required
             />
-          </div>          
+          </div>
         </NameInputContainer>
         <CreateProductButtonsContainer>
           <CancelButton onClick={props.handleOnClose}>Cancelar</CancelButton>

@@ -43,7 +43,6 @@ export default function Produtos() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
         const response = await api.get(`fornecedores/`);
 
         console.log(response);
@@ -223,30 +222,6 @@ export default function Produtos() {
             </div>
           )}
 
-          {/* {filteredProducts.map((product) => (
-          <ProductCard>
-            <ProductMainInfoContainer>
-              <ProductPhotoContainer>
-                <img
-                  style={{ width: "70%", height: "70%", borderRadius: "15%" }}
-                  alt="rndPic"
-                  src={product.image}
-                />
-              </ProductPhotoContainer>
-              <ProductName>{product.nome}</ProductName>
-            </ProductMainInfoContainer>
-            <ProductCategoryContainer>
-              {product.categoria}
-            </ProductCategoryContainer>
-            <ProductCommonInfo>{product.stock}</ProductCommonInfo>
-            <ProductCommonInfo>R${product.preco}</ProductCommonInfo>
-            <Link to="/update-prod">
-              <ProductEditContainer>
-                <Edit color="primary" />
-              </ProductEditContainer>
-            </Link>
-          </ProductCard>
-        ))} */}
         </div>
       </AutoScrollContainer>
     </Container>

@@ -12,7 +12,7 @@ import {
   CreateProductButtonsContainer,
   SaveButton,
   CancelButton,
-  EmployeeTypeSelect
+  EmployeeTypeSelect,
 } from "./styles";
 import { FormContainer, FormInput, FormLabel } from "../../auth/login/styles";
 import { NameInputContainer } from "../../auth/signup/styles";
@@ -25,49 +25,58 @@ function CreateFuncionario(props) {
   const [employeeType, setEmployeeType] = useState("farmaceutico");
   const [otherEmployeeType, setOtherEmployeeType] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [crf, setCrf] = useState('');
+  const [crf, setCrf] = useState("");
 
-  const handleCreateFuncionario = useCallback(async (event) => {
-    props.handleOnClose();
-    event.preventDefault();
+  const handleCreateFuncionario = useCallback(
+    async (event) => {
+      props.handleOnClose();
+      event.preventDefault();
 
-    let obg;
-    if (employeeType === 'farmaceutico') {
-      obg = {
-        funcional: funcional,
-        nome: name,
-        salario: Number(salary),
-        sexo: gender,
-        tipo_func: 'farmaceutico',
-        crf,
+      let obg;
+      if (employeeType === "farmaceutico") {
+        obg = {
+          funcional: funcional,
+          nome: name,
+          salario: Number(salary),
+          sexo: gender,
+          tipo_func: "farmaceutico",
+          crf,
+        };
+      } else {
+        obg = {
+          funcional: funcional,
+          nome: name,
+          salario: Number(salary),
+          sexo: gender,
+          tipo_func:
+            employeeType === "outros" ? otherEmployeeType : employeeType,
+        };
       }
-    } else {
-      obg = {
-        funcional: funcional,
-        nome: name,
-        salario: Number(salary),
-        sexo: gender,
-        tipo_func: employeeType === 'outros' ? otherEmployeeType : employeeType,
+
+      console.log(obg);
+
+      try {
+        const response = await api.post("funcionarios/", obg);
+
+        console.log(response);
+        toast.success("Funcionário cadastrado com sucesso");
+      } catch (error) {
+        toast.error("Erro no cadastro! Verifique os campos e tente novamente.");
+        console.log("erro");
+        console.log(error);
       }
-    }
-
-    console.log(obg);
-
-    try {
-
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.post('funcionarios/', obg);
-
-      console.log(response);
-      toast.success("Funcionário cadastrado com sucesso");
-
-    } catch (error) {
-      toast.error("Erro no cadastro! Verifique os campos e tente novamente.");
-      console.log('erro');
-      console.log(error);
-    }
-
-  }, [funcional, name, crf, salary, gender, employeeType, otherEmployeeType, props]);
+    },
+    [
+      funcional,
+      name,
+      crf,
+      salary,
+      gender,
+      employeeType,
+      otherEmployeeType,
+      props,
+    ]
+  );
 
   return (
     <CreateProductContainer>
@@ -137,7 +146,8 @@ function CreateFuncionario(props) {
               Tipo Funcionário
             </CreateProductFormLabel>
             <br />
-            <EmployeeTypeSelect name="employeeType"
+            <EmployeeTypeSelect
+              name="employeeType"
               onChange={(event) => setEmployeeType(event.target.value)}
             >
               <option value="farmaceutico">Farmaceutico</option>
@@ -145,24 +155,24 @@ function CreateFuncionario(props) {
               <option value="gerente">Gerente</option>
               <option value="outros">outros</option>
             </EmployeeTypeSelect>
-            {employeeType === 'outros' &&
+            {employeeType === "outros" && (
               <CreateProductFormInput
                 type="text"
                 placeholder="Cargo Alternativo"
                 value={otherEmployeeType}
                 onChange={(event) => setOtherEmployeeType(event.target.value)}
               />
-            }
-            {employeeType === 'farmaceutico' &&
+            )}
+            {employeeType === "farmaceutico" && (
               <CreateProductFormInput
                 type="text"
                 placeholder="CRF com 6 dígitos"
                 value={crf}
                 onChange={(event) => setCrf(event.target.value)}
-                required={employeeType === 'farmaceutico'}
+                required={employeeType === "farmaceutico"}
                 pattern="[0-9]{6}"
               />
-            }
+            )}
           </div>
         </NameInputContainer>
         <NameInputContainer>
@@ -179,15 +189,28 @@ function CreateFuncionario(props) {
               required
             />
           </div>
-          <div style={{ display: "flex", flexDirection: "column", marginRight: 30 }}>
-            <CreateProductFormLabel htmlFor="lastName" style={{ marginLeft: 0 }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginRight: 30,
+            }}
+          >
+            <CreateProductFormLabel
+              htmlFor="lastName"
+              style={{ marginLeft: 0 }}
+            >
               Sexo
             </CreateProductFormLabel>
             <br />
-            <EmployeeTypeSelect name="sexo" style={{ marginLeft: 0 }}
+            <EmployeeTypeSelect
+              name="sexo"
+              style={{ marginLeft: 0 }}
               onChange={(event) => setGender(event.target.value)}
             >
-              <option defaultChecked value="M">Masculino</option>
+              <option defaultChecked value="M">
+                Masculino
+              </option>
               <option value="F">Feminino</option>
             </EmployeeTypeSelect>
           </div>
@@ -199,7 +222,7 @@ function CreateFuncionario(props) {
           </SaveButton>
         </CreateProductButtonsContainer>
       </FormContainer>
-    </CreateProductContainer >
+    </CreateProductContainer>
   );
 }
 
@@ -251,7 +274,7 @@ export default CreateFuncionario;
 
 //     try {
 
-//       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+//
 //       const response = await api.post('funcionarios/', obg);
 
 //       console.log(response);

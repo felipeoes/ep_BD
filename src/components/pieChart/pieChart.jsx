@@ -1,16 +1,9 @@
 import "./pieChart.css";
 import React, { useCallback, useState, useEffect } from "react";
 import { PieChart, Pie, Sector } from "recharts";
-import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 200 },
-];
+let isSuppliersChart = false;
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -26,6 +19,7 @@ const renderActiveShape = (props) => {
     payload,
     percent,
     value,
+    suppliers,
   } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
@@ -39,7 +33,18 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text
+        x={cx}
+        y={cy}
+        dy={8}
+        textAnchor="middle"
+        fill={fill}
+        style={{
+          zIndex: 1000,
+          fontFamily: "MontserratRegular",
+          fontSize: "13px",
+        }}
+      >
         {payload.name}
       </text>
       <Sector
@@ -70,13 +75,15 @@ const renderActiveShape = (props) => {
         style={{
           zIndex: 1000,
           fontFamily: "MontserratRegular",
-          fontSize: "14px",
+          fontSize: "13px",
         }}
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`${value}`}</text>
+      >
+        {isSuppliersChart ? `R$${value}` : `${value}`}
+      </text>
       <text
         style={{
           zIndex: 1000,
@@ -104,27 +111,21 @@ export default function MyPieChart(props) {
     [setActiveIndex]
   );
 
+  isSuppliersChart = props.suppliers ? true : false;
+
   return (
-    <PieChart
-      width={400}
-      height={400}
-      style={{
-        overflowWrap: "break-word",
-        alignContent: "center",
-        marginTop: 0,
-        // marginLeft: props.marginLeft
-      }}
-    >
+    <PieChart width={400} height={400} suppliers={props.suppliers}>
       {props.marginLeft ? (
         <Pie
           style={{ zIndex: 100 }}
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={props.data}
+          suppliers={props.suppliers}
           cx={170}
           cy={120}
           innerRadius={60}
-          outerRadius={80}
+          outerRadius={70}
           fill="#2940D3"
           dataKey="value"
           onMouseEnter={onPieEnter}
@@ -135,10 +136,11 @@ export default function MyPieChart(props) {
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={props.data}
+          suppliers={props.suppliers}
           cx={155}
           cy={120}
           innerRadius={60}
-          outerRadius={80}
+          outerRadius={70}
           fill="#2940D3"
           dataKey="value"
           onMouseEnter={onPieEnter}

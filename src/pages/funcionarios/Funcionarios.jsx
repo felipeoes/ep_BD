@@ -40,7 +40,6 @@ export default function Funcionarios() {
   useEffect(() => {
     async function loadEmployees() {
       try {
-        api.defaults.headers.Authorization = "Basic ZmVsaXBlOjEyM2Zhcm1h";
         const response = await api.get(`funcionarios/`);
 
         console.log(response);

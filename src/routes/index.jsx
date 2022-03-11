@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useContext, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import AuthContext from "../contexts/auth";
 
@@ -27,8 +28,6 @@ import CreateFuncionarios from "../pages/funcionarios/create";
 import UpdateFuncionarios from "../pages/funcionarios/update";
 import CreateFornecedor from "../pages/fornecedores/create";
 import UpdateFornecedor from "../pages/fornecedores/update";
-import CreateProduto from "../pages/produtos/create";
-import UpdateProduto from "../pages/produtos/update";
 import EstoqueProduto from "../pages/produtos/estoque";
 import Clientes from "../pages/clientes/Clientes";
 import CreateCliente from "../pages/clientes/create";
@@ -43,11 +42,17 @@ import CreateServico from "../pages/servicos/create";
 import UpdateServico from "../pages/servicos/update";
 import ListServicos from "../pages/servicos/list";
 import RealizarServico from "../pages/realizarServico";
+import GetItems from "../services/utils/getItems";
+import UserProfile from "./../pages/user/user-profile";
+import UserDetails from "../pages/user/user-details/user-details";
+import { UserContentWrapper } from "./styles";
 
 const MyRoutes = () => {
   const context = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState("Dashboard");
-  
+
+  // const products = GetItems("produtos/");
+
   function updatePage(pageName) {
     setCurrentPage(pageName);
   }
@@ -72,14 +77,30 @@ const MyRoutes = () => {
               <div className="contentWrapper" style={{ width: "100%" }}>
                 <Topbar currentPage={currentPage} />
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
+                  <Route path="*" element={<Dashboard />} />
+
+                  <Route
+                    path="/user-profile/*"
+                    element={
+                      <RequireAuth redirectTo="/login">
+                        <UserContentWrapper>
+                          <UserProfile updatePage={updatePage} />
+                          <Routes>
+                            <Route
+                              path="/details"
+                              element={<UserDetails updatePage={updatePage} />}
+                            />
+                          </Routes>
+                        </UserContentWrapper>
+                      </RequireAuth>
+                    }
+                  />
+
                   <Route path="/logout" element={<Logout />} />
 
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/servicos" element={<Servicos />} />
                   <Route path="produtos" element={<Produtos />} />
-                  <Route path="create-prod" element={<CreateProduto />} />
-                  <Route path="update-prod" element={<UpdateProduto />} />
                   <Route path="estoque-prod" element={<EstoqueProduto />} />
 
                   <Route path="servicos" element={<Servicos />} />

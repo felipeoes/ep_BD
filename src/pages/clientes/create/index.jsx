@@ -12,12 +12,12 @@ import {
   CreateProductButtonsContainer,
   SaveButton,
   CancelButton,
-  EmployeeTypeSelect
+  EmployeeTypeSelect,
 } from "./styles";
 
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import es from 'date-fns/locale/pt-BR';
+import es from "date-fns/locale/pt-BR";
 
 import { FormContainer, FormInput, FormLabel } from "../../auth/login/styles";
 import { NameInputContainer } from "../../auth/signup/styles";
@@ -30,34 +30,42 @@ function CreateCliente(props) {
   const [gender, setGender] = useState("M");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  registerLocale('es', es);
+  registerLocale("es", es);
 
-  const handleCreateNewCliente = useCallback(async (event) => {
-    event.preventDefault();
-    props.handleOnClose();
-    try {
-      const obg = {
-        nome: name,
-        cpf,
-        data_nascimento: (birthDate.getFullYear() + "-" + ((birthDate.getMonth() + 1)) + "-" + (birthDate.getDate())),
-        sexo: gender,
-        email,
-        id_beneficios: 1,
+  const handleCreateNewCliente = useCallback(
+    async (event) => {
+      event.preventDefault();
+      props.handleOnClose();
+      try {
+        const obg = {
+          nome: name,
+          cpf,
+          data_nascimento:
+            birthDate.getFullYear() +
+            "-" +
+            (birthDate.getMonth() + 1) +
+            "-" +
+            birthDate.getDate(),
+          sexo: gender,
+          email,
+          id_beneficios: 1,
+        };
+        console.log(obg);
+
+        const response = await api.post(`clientes/`, obg);
+
+        console.log(response);
+        toast.success("Cliente cadastrado com sucesso!");
+      } catch (error) {
+        toast.error(
+          "Erro no casdastro do cliente! Verificar os campos preenchidos"
+        );
+        console.log("erro");
+        console.log(error);
       }
-      console.log(obg);
-
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.post(`clientes/`, obg);
-
-      console.log(response);
-      toast.success("Cliente cadastrado com sucesso!");
-
-    } catch (error) {
-      toast.error("Erro no casdastro do cliente! Verificar os campos preenchidos");
-      console.log('erro');
-      console.log(error);
-    }
-  }, [cpf, birthDate, name, gender, email, props]);
+    },
+    [cpf, birthDate, name, gender, email, props]
+  );
 
   return (
     <CreateProductContainer>
@@ -126,10 +134,14 @@ function CreateCliente(props) {
               Sexo
             </CreateProductFormLabel>
             <br />
-            <EmployeeTypeSelect name="sexo" style={{ marginLeft: 0 }}
+            <EmployeeTypeSelect
+              name="sexo"
+              style={{ marginLeft: 0 }}
               onChange={(event) => setGender(event.target.value)}
             >
-              <option defaultChecked value="M">Masculino</option>
+              <option defaultChecked value="M">
+                Masculino
+              </option>
               <option value="F">Feminino</option>
             </EmployeeTypeSelect>
           </div>
@@ -142,11 +154,12 @@ function CreateCliente(props) {
             <br />
             <DatePicker
               className="data"
-              locale='es'
+              locale="es"
               selected={birthDate}
               onChange={(date) => setBirthDate(date)}
               dateFormat="dd/MM/yyyy"
-              placeholderText="Data de Nascimento" />
+              placeholderText="Data de Nascimento"
+            />
           </div>
         </NameInputContainer>
         <CreateProductButtonsContainer>
@@ -201,7 +214,7 @@ export default CreateCliente;
 //       }
 //       console.log(obg);
 
-//       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+//
 //       const response = await api.post(`clientes/`, obg);
 
 //       await api.post('clientes-telefones', {
@@ -282,5 +295,3 @@ export default CreateCliente;
 // }
 
 // export default CreateCliente;
-
-

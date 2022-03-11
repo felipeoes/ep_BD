@@ -157,6 +157,21 @@ export const CardContainer = styled.div`
   justify-content: space-evenly;
 `;
 
+export const ClientCPFContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  height: 24px;
+  width: 96px;
+  border-radius: 11px;
+  padding: 5px, 20px, 5px, 20px;
+
+  background: #f5f5f7;
+  border-radius: 11px;
+`;
+
 export const ClientCommonInfo = styled.p`
   font-family: Montserrat;
   font-style: normal;

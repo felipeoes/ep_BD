@@ -13,12 +13,12 @@ import {
   CreateProductButtonsContainer,
   SaveButton,
   CancelButton,
-  EmployeeTypeSelect
+  EmployeeTypeSelect,
 } from "./styles";
 
-import DatePicker, { registerLocale } from 'react-datepicker';
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import es from 'date-fns/locale/pt-BR';
+import es from "date-fns/locale/pt-BR";
 
 import { FormContainer, FormInput, FormLabel } from "../../auth/login/styles";
 import { NameInputContainer } from "../../auth/signup/styles";
@@ -27,38 +27,54 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 
 function CreateTurno(props) {
-
   const [descricao, setDescricao] = useState("");
-  const [dataEntrada, setDataEntrada] = useState(setHours(setMinutes(new Date(), 30), 16));
-  const [dataSaida, setDataSaida] = useState(setHours(setMinutes(new Date(), 30), 16));
+  const [dataEntrada, setDataEntrada] = useState(
+    setHours(setMinutes(new Date(), 30), 16)
+  );
+  const [dataSaida, setDataSaida] = useState(
+    setHours(setMinutes(new Date(), 30), 16)
+  );
   const [funcional, setFuncional] = useState("");
 
-  registerLocale('es', es);
+  registerLocale("es", es);
 
-  const handleCreateNewTurno = useCallback(async (event) => {
-    event.preventDefault();
-    props.handleOnClose();
-    try {
-      const obg = {
-        funcional,
-        data_hora_entrada: (dataEntrada.getFullYear() + "-" + ((dataEntrada.getMonth() + 1)) + "-" + (dataEntrada.getDate())),
-        data_hora_saida: (dataSaida.getFullYear() + "-" + ((dataSaida.getMonth() + 1)) + "-" + (dataSaida.getDate())),
-        descricao,
+  const handleCreateNewTurno = useCallback(
+    async (event) => {
+      event.preventDefault();
+      props.handleOnClose();
+      try {
+        const obg = {
+          funcional,
+          data_hora_entrada:
+            dataEntrada.getFullYear() +
+            "-" +
+            (dataEntrada.getMonth() + 1) +
+            "-" +
+            dataEntrada.getDate(),
+          data_hora_saida:
+            dataSaida.getFullYear() +
+            "-" +
+            (dataSaida.getMonth() + 1) +
+            "-" +
+            dataSaida.getDate(),
+          descricao,
+        };
+        console.log(obg);
+
+        const response = await api.post(`turnos/`, obg);
+
+        console.log(response);
+        toast.success("Turno cadastrado com sucesso!");
+      } catch (error) {
+        toast.error(
+          "Erro no casdastro do turno! Verificar os campos preenchidos"
+        );
+        console.log("erro");
+        console.log(error);
       }
-      console.log(obg);
-
-      api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
-      const response = await api.post(`turnos/`, obg);
-
-      console.log(response);
-      toast.success("Turno cadastrado com sucesso!");
-
-    } catch (error) {
-      toast.error("Erro no casdastro do turno! Verificar os campos preenchidos");
-      console.log('erro');
-      console.log(error);
-    }
-  }, [props, dataEntrada, dataSaida, descricao, funcional]);
+    },
+    [props, dataEntrada, dataSaida, descricao, funcional]
+  );
 
   return (
     <CreateProductContainer>
@@ -92,7 +108,7 @@ function CreateTurno(props) {
             </CreateProductFormLabel>
             <br />
             <DatePicker
-            locale='es'
+              locale="es"
               className="data"
               selected={dataEntrada}
               onChange={(date) => setDataEntrada(date)}
@@ -200,7 +216,7 @@ export default CreateTurno;
 //       }
 //       console.log(obg);
 
-//       api.defaults.headers.Authorization = 'Basic ZmVsaXBlOjEyM2Zhcm1h';
+//
 //       const response = await api.post(`clientes/`, obg);
 
 //       await api.post('clientes-telefones', {
@@ -281,5 +297,3 @@ export default CreateTurno;
 // }
 
 // export default CreateCliente;
-
-

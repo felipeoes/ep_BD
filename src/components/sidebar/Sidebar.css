@@ -1,18 +1,46 @@
 .sidebar {
-  width: 14rem;
-  background-color: #363740;
+  background: #212121;
+  border-right: 1px solid #e5e5e5;
   position: sticky;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  width: 60px;
+  overflow: hidden;
+  transition: 1s ease;
+  z-index: 1000;
+}
+
+.sidebar:hover {
+  width: 14rem;
+  overflow: visible;
+  transition: 1s;
 }
 
 .sidebarWrapper {
   padding: 20px;
   padding-top: 0;
+  padding-left: 18px;
   margin-top: 0;
   color: #2c3e4e;
   position: sticky;
+}
+
+.sidebarMenu {
+  margin-top: 10px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.sidebarMenu ul,
+li {
+  outline: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .logoTitle {
@@ -24,12 +52,9 @@
 }
 .logoImg {
   margin-top: 30px;
+  margin-left: -2px;
   height: 30px;
   width: 30px;
-}
-
-.sidebarMenu {
-  margin-bottom: 10px;
 }
 
 .sidebarTitle {
@@ -46,30 +71,19 @@
   padding: 5px;
   color: rgb(222, 221, 223);
 }
+
 .sidebarListItem {
   font-family: MontserratLight;
   padding: 10px;
+  padding-left: 0;
   cursor: pointer;
   align-items: center;
   display: flex;
   font-size: 14px;
   color: #a4a6b3;
   border-radius: 6px;
-}
-
-a:visited {
-  color: rgb(222, 221, 223);
-  text-decoration-line: none;
-}
-
-a:link {
-  color: rgb(222, 221, 223);
-  text-decoration-line: none;
-}
-
-
-a:active {
-  color: rgb(223, 221, 223);
+  vertical-align: middle;
+  margin-left: 1px;
 }
 
 .sidebarListItem.active,
@@ -78,9 +92,24 @@ a:active {
   color: #dde2ff;
 }
 
+.sidebar a:visited {
+  color: rgb(222, 221, 223);
+  text-decoration-line: none;
+}
+
+.sidebar a:link {
+  color: rgb(222, 221, 223);
+  text-decoration-line: none;
+}
+
+.sidebar a:active {
+  color: rgb(223, 221, 223);
+}
+
 .sidebarIcon {
+  font-size: 2em;
   margin-right: 0.8rem;
-  font-size: 18px !important;
+  vertical-align: middle;
 }
 
 .userInfo {
@@ -118,4 +147,14 @@ a:active {
 }
 .sideBarMessageContainer {
   display: flex;
+}
+
+@media screen and (max-height: 750px) {
+  .logoImg {
+    margin-top: 10px;
+  }
+
+  .logoTitle {
+    margin-top: 10px;
+  }
 }
